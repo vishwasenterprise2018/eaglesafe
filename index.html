@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EAGLE SAFE | Safe Locker for Gold, Jewellery and Home Security</title>
+    <meta
+      name="description"
+      content="EAGLE SAFE offers strong safe lockers for gold, jewellery, cash, documents, homes, shops and businesses. Explore double door, large, medium and small safe lockers with enquiry service in West Bengal, Rajasthan, Jharkhand and Odisha."
+    />
+    <meta
+      name="keywords"
+      content="EAGLE SAFE, Eagle Safe locker, safe locker, gold locker, jewellery locker, jewelry locker, home safe, office safe, double door safe, large safe, medium safe, small safe, safe locker West Bengal, safe locker Murshidabad, safe locker Berhampore"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="EAGLE SAFE" />
+    <link rel="canonical" href="https://eaglesafe.in/" />
+    <meta property="og:title" content="EAGLE SAFE | Safe Locker for Gold and Jewellery" />
+    <meta
+      property="og:description"
+      content="Premium safe lockers for gold, jewellery, cash, documents, homes, shops and businesses. View EAGLE SAFE product models and submit an enquiry online."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://eaglesafe.in/" />
+    <meta property="og:image" content="https://eaglesafe.in/image/sliding_image/image1.jpg" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "EAGLE SAFE",
+        "description": "Safe locker supplier for gold, jewellery, cash, documents, home safety and business security.",
+        "url": "https://eaglesafe.in/",
+        "image": "https://eaglesafe.in/image/sliding_image/image1.jpg",
+        "telephone": "+919382865054",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "49/A Daihatta Road, Kalikatala, Khagra",
+          "addressLocality": "Berhampore",
+          "addressRegion": "West Bengal",
+          "postalCode": "742103",
+          "addressCountry": "IN"
+        },
+        "areaServed": ["West Bengal", "Rajasthan", "Jharkhand", "Odisha"],
+        "makesOffer": [
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Double Door Safe Locker" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Large Safe Locker" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Medium Safe Locker" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Small Safe Locker" } }
+        ]
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="google-sheet-config.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "DM Sans", Arial, sans-serif;
+        background: #f6f7f9;
+        color: #14171f;
+      }
+
+      .site-header {
+        width: 100%;
+        padding: 28px 20px;
+        text-align: center;
+        background: #ffffff;
+        border-bottom: 1px solid #e2e6ee;
+      }
+
+      .brand-name {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: 0;
+      }
+
+      .quick-nav {
+        width: 100%;
+        background: #ffffff;
+        border-bottom: 1px solid #e2e6ee;
+      }
+
+      .quick-nav-inner {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: clamp(12px, 3vw, 46px);
+        width: min(1280px, calc(100% - 24px));
+        margin: 0 auto;
+        padding: 12px 0;
+      }
+
+      .quick-nav-button {
+        min-width: clamp(140px, 15vw, 190px);
+        border: 0;
+        background: transparent;
+        color: #14171f;
+        padding: 10px 16px;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 160ms ease, border-color 160ms ease;
+      }
+
+      .quick-nav-button:hover {
+        color: #3b4658;
+      }
+
+      .quick-nav-menu {
+        display: none;
+      }
+
+      .quick-nav-dropdown {
+        display: none;
+      }
+
+      .sliding-ad {
+        --slide-gap: 22px;
+        --slide-width: min(72vw, 920px);
+        width: 100%;
+        margin: 22px 0 0;
+        overflow: hidden;
+      }
+
+      .intro-section {
+        width: min(980px, calc(100% - 32px));
+        margin: 46px auto 0;
+        text-align: center;
+      }
+
+      .intro-section h2 {
+        margin: 0;
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 800;
+        color: #14171f;
+      }
+
+      .intro-section p {
+        margin: 14px auto 0;
+        max-width: 840px;
+        color: #4f5b6d;
+        font-size: 17px;
+        line-height: 1.75;
+        font-weight: 500;
+      }
+
+      .slider-frame {
+        position: relative;
+        width: 100%;
+        height: clamp(190px, 34vw, 470px);
+        overflow: hidden;
+      }
+
+      .slider-track {
+        display: flex;
+        align-items: center;
+        gap: var(--slide-gap);
+        height: 100%;
+      }
+
+      .slide {
+        flex: 0 0 var(--slide-width);
+        aspect-ratio: 16 / 9;
+        max-height: 100%;
+        overflow: hidden;
+        border-radius: 8px;
+        background: #dfe5ef;
+        opacity: 0.45;
+        transform: scale(0.88);
+        transition: opacity 520ms ease, transform 520ms ease;
+        box-shadow: 0 12px 28px rgba(20, 23, 31, 0.12);
+      }
+
+      .slide.active {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 18px 42px rgba(20, 23, 31, 0.16);
+      }
+
+      .slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .slider-button {
+        position: absolute;
+        top: 50%;
+        display: grid;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        border: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.9);
+        color: #14171f;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+        transform: translateY(-50%);
+        box-shadow: 0 10px 24px rgba(20, 23, 31, 0.18);
+      }
+
+      .slider-button:hover {
+        background: #ffffff;
+      }
+
+      .slider-button.previous {
+        left: 18px;
+      }
+
+      .slider-button.next {
+        right: 18px;
+      }
+
+      .slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 0 0;
+      }
+
+      .slider-dot {
+        width: 10px;
+        height: 10px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: #aab3c2;
+        cursor: pointer;
+      }
+
+      .slider-dot.active {
+        width: 26px;
+        border-radius: 999px;
+        background: #14171f;
+      }
+
+      .product-types {
+        width: min(1180px, calc(100% - 32px));
+        margin: 54px auto 70px;
+      }
+
+      .section-title {
+        margin: 0;
+        text-align: center;
+        font-size: 34px;
+        font-weight: 800;
+        color: #14171f;
+      }
+
+      .section-subtitle {
+        margin: 8px 0 34px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        color: #687284;
+      }
+
+      .product-group {
+        margin-top: 34px;
+      }
+
+      .product-group:first-of-type {
+        margin-top: 0;
+      }
+
+      .product-group-title {
+        margin: 0 0 16px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: 800;
+        color: #1b2230;
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(280px, 420px));
+        gap: 24px;
+        justify-content: center;
+      }
+
+      .product-card {
+        display: block;
+        border: 1px solid #e2e6ee;
+        border-radius: 8px;
+        background: #ffffff;
+        overflow: hidden;
+        color: inherit;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: 0 12px 28px rgba(20, 23, 31, 0.08);
+        transition: transform 180ms ease, box-shadow 180ms ease;
+      }
+
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 42px rgba(20, 23, 31, 0.13);
+      }
+
+      .product-image-wrap {
+        display: grid;
+        place-items: center;
+        aspect-ratio: 1 / 1;
+        padding: 22px;
+        background: #f0f3f8;
+      }
+
+      .product-image-wrap.image-missing::after {
+        content: "Product image coming soon";
+        color: #687284;
+        font-size: 15px;
+        font-weight: 800;
+        text-align: center;
+      }
+
+      .product-image {
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+
+      .enquiry-section {
+        width: min(860px, calc(100% - 32px));
+        margin: 0 auto 80px;
+        padding: 34px;
+        border: 1px solid #e2e6ee;
+        border-radius: 8px;
+        background: #ffffff;
+        box-shadow: 0 14px 34px rgba(20, 23, 31, 0.08);
+      }
+
+      .enquiry-title {
+        margin: 0 0 24px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 800;
+        color: #14171f;
+      }
+
+      .enquiry-form {
+        display: grid;
+        gap: 18px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .form-field {
+        display: grid;
+        gap: 8px;
+      }
+
+      .form-field label {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1b2230;
+      }
+
+      .form-field input {
+        width: 100%;
+        height: 48px;
+        border: 1px solid #cfd6e3;
+        border-radius: 6px;
+        padding: 0 14px;
+        font: inherit;
+        color: #14171f;
+        background: #ffffff;
+      }
+
+      .form-field input:focus {
+        border-color: #14171f;
+        outline: 3px solid rgba(20, 23, 31, 0.12);
+      }
+
+      .form-field input[readonly] {
+        background: #f0f3f8;
+        color: #4f5b6d;
+      }
+
+      .form-message {
+        margin: 0;
+        min-height: 22px;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .form-message.error {
+        color: #b42318;
+      }
+
+      .form-message.success {
+        color: #067647;
+      }
+
+      .submit-button {
+        justify-self: center;
+        min-width: 180px;
+        height: 48px;
+        border: 0;
+        border-radius: 6px;
+        background: #14171f;
+        color: #ffffff;
+        font: inherit;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .submit-button:hover {
+        background: #2a3140;
+      }
+
+      .visit-section {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto 86px;
+      }
+
+      .product-types,
+      .enquiry-section,
+      .visit-section {
+        scroll-margin-top: 18px;
+      }
+
+      .visit-title {
+        margin: 0 0 30px;
+        text-align: center;
+        font-size: 34px;
+        font-weight: 800;
+        color: #14171f;
+      }
+
+      .visit-layout {
+        display: grid;
+        justify-content: center;
+      }
+
+      .dealer-panel {
+        width: min(680px, 100%);
+        border: 1px solid #e2e6ee;
+        border-radius: 8px;
+        background: #ffffff;
+        overflow: hidden;
+        box-shadow: 0 14px 34px rgba(20, 23, 31, 0.08);
+      }
+
+      .dealer-panel {
+        padding: 32px;
+      }
+
+      .dealer-kicker {
+        margin: 0 0 10px;
+        font-size: 15px;
+        font-weight: 800;
+        color: #687284;
+        text-transform: uppercase;
+      }
+
+      .dealer-name {
+        margin: 0 0 26px;
+        font-size: 30px;
+        font-weight: 800;
+        color: #14171f;
+      }
+
+      .dealer-block {
+        margin-top: 24px;
+      }
+
+      .dealer-block:first-of-type {
+        margin-top: 0;
+      }
+
+      .dealer-label {
+        margin: 0 0 8px;
+        font-size: 16px;
+        font-weight: 800;
+        color: #1b2230;
+      }
+
+      .dealer-text {
+        margin: 0;
+        font-size: 17px;
+        line-height: 1.65;
+        color: #3b4658;
+      }
+
+      .phone-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .phone-link {
+        width: fit-content;
+        color: #14171f;
+        font-size: 18px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .phone-link:hover {
+        text-decoration: underline;
+      }
+
+      .location-link {
+        display: grid;
+        place-items: center;
+        width: min(100%, 360px);
+        min-height: 48px;
+        margin: 28px auto 0;
+        border-radius: 6px;
+        background: #14171f;
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 800;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .location-link:hover {
+        background: #2a3140;
+      }
+
+      @media (max-width: 640px) {
+        .site-header {
+          padding: 22px 16px;
+        }
+
+        .brand-name {
+          font-size: 24px;
+        }
+
+        .quick-nav-inner {
+          position: relative;
+          justify-content: space-between;
+          overflow: visible;
+          padding: 10px 0;
+        }
+
+        .quick-nav-button {
+          min-width: auto;
+          padding: 9px 13px;
+          font-size: 13px;
+        }
+
+        .quick-nav-button.mobile-hidden {
+          display: none;
+        }
+
+        .quick-nav-menu {
+          display: inline-grid;
+          place-items: center;
+          width: 42px;
+          height: 38px;
+          min-width: 42px;
+          padding: 0;
+          font-size: 22px;
+        }
+
+        .quick-nav-dropdown {
+          position: absolute;
+          top: calc(100% + 8px);
+          right: 0;
+          z-index: 10;
+          display: grid;
+          gap: 8px;
+          width: min(220px, 82vw);
+          padding: 10px;
+          border: 1px solid #d8deea;
+          border-radius: 8px;
+          background: #ffffff;
+          box-shadow: 0 16px 34px rgba(20, 23, 31, 0.16);
+        }
+
+        .quick-nav-dropdown[hidden] {
+          display: none;
+        }
+
+        .quick-nav-dropdown .quick-nav-button {
+          width: 100%;
+        }
+
+        .sliding-ad {
+          --slide-gap: 12px;
+          --slide-width: 82vw;
+          width: 100%;
+          margin-top: 14px;
+        }
+
+        .slider-frame {
+          height: clamp(150px, 52vw, 250px);
+        }
+
+        .intro-section {
+          width: calc(100% - 24px);
+          margin-top: 34px;
+        }
+
+        .intro-section p {
+          font-size: 15px;
+          line-height: 1.65;
+        }
+
+        .slider-track {
+        }
+
+        .slide {
+          border-radius: 6px;
+        }
+
+        .slider-button {
+          width: 36px;
+          height: 36px;
+          font-size: 24px;
+        }
+
+        .slider-button.previous {
+          left: 10px;
+        }
+
+        .slider-button.next {
+          right: 10px;
+        }
+
+        .product-types {
+          width: calc(100% - 24px);
+          margin: 42px auto 54px;
+        }
+
+        .section-title {
+          font-size: 28px;
+        }
+
+        .section-subtitle {
+          margin-bottom: 28px;
+          font-size: 14px;
+        }
+
+        .product-group {
+          margin-top: 28px;
+        }
+
+        .product-group-title {
+          font-size: 21px;
+        }
+
+        .product-grid {
+          display: flex;
+          grid-template-columns: none;
+          gap: 14px;
+          justify-content: flex-start;
+          overflow-x: auto;
+          padding: 0 2px 10px;
+          scroll-snap-type: x mandatory;
+          scrollbar-width: thin;
+        }
+
+        .product-card {
+          flex: 0 0 78%;
+          scroll-snap-align: start;
+        }
+
+        .product-image-wrap {
+          aspect-ratio: 4 / 3;
+          padding: 18px;
+        }
+
+        .enquiry-section {
+          width: calc(100% - 24px);
+          margin-bottom: 58px;
+          padding: 24px 18px;
+        }
+
+        .enquiry-title {
+          font-size: 23px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
+        .submit-button {
+          width: 100%;
+        }
+
+        .visit-section {
+          width: calc(100% - 24px);
+          margin-bottom: 58px;
+        }
+
+        .visit-title {
+          font-size: 28px;
+        }
+
+        .visit-layout {
+          display: block;
+        }
+
+        .dealer-panel {
+          padding: 24px 18px;
+        }
+
+        .dealer-name {
+          font-size: 25px;
+        }
+
+        .dealer-text,
+        .phone-link {
+          font-size: 16px;
+        }
+
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <h1 class="brand-name">EAGLE SAFE</h1>
+    </header>
+
+    <nav class="quick-nav" aria-label="Main quick links">
+      <div class="quick-nav-inner">
+        <button class="quick-nav-button" type="button" data-page="product.html">OUR PRODUCT</button>
+        <button class="quick-nav-button mobile-hidden" type="button" data-scroll="intro-section">OUR SERVICE</button>
+        <button class="quick-nav-button mobile-hidden" type="button" data-scroll="enquiry-section">ENQUIRY</button>
+        <button class="quick-nav-button" type="button" data-scroll="visit-section">CONTACT US</button>
+        <button class="quick-nav-button quick-nav-menu" type="button" aria-label="Open menu">...</button>
+        <div class="quick-nav-dropdown" hidden>
+          <button class="quick-nav-button" type="button" data-page="product.html">OUR PRODUCT</button>
+          <button class="quick-nav-button" type="button" data-scroll="intro-section">OUR SERVICE</button>
+          <button class="quick-nav-button" type="button" data-scroll="enquiry-section">ENQUIRY</button>
+          <button class="quick-nav-button" type="button" data-scroll="visit-section">CONTACT US</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="sliding-ad" aria-label="Sliding ad">
+      <div class="slider-frame">
+        <div class="slider-track" id="sliderTrack"></div>
+        <button class="slider-button previous" type="button" aria-label="Previous ad">&lt;</button>
+        <button class="slider-button next" type="button" aria-label="Next ad">&gt;</button>
+      </div>
+      <div class="slider-dots" aria-label="Choose ad" id="sliderDots"></div>
+    </section>
+
+    <section class="intro-section">
+      <h2>Safe Lockers for Gold, Jewellery, Cash and Documents</h2>
+      <p>EAGLE SAFE provides reliable safe lockers for homes, jewellery stores, offices and businesses. Our safe locker range includes double door safe lockers, large safes, medium safes and small safes designed to protect gold, jewellery, cash, important documents and valuables with strong lock options.</p>
+    </section>
+
+    <section class="product-types">
+      <h2 class="section-title">Our Product Types</h2>
+      <p class="section-subtitle">Click the Safe Locker for more info</p>
+      <div class="product-group"><h3 class="product-group-title">Double Door</h3><div class="product-grid"><a class="product-card" href="product_pages/double_door/DDMT1/DDMT1.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/double_door/DDMT1/image1.png" alt="DDMT1 double door safe locker for gold jewellery cash and document security"></div></a><a class="product-card" href="product_pages/double_door/DDMT2/DDMT2.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/double_door/DDMT2/image1.png" alt="DDMT2 double door safe locker for gold jewellery cash and document security"></div></a></div></div>
+      <div class="product-group"><h3 class="product-group-title">Large Safe</h3><div class="product-grid"><a class="product-card" href="product_pages/large/LSMT1/LSMT1.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/large/LSMT1/image1.png" alt="LSMT1 large safe locker for gold jewellery cash and document security"></div></a><a class="product-card" href="product_pages/large/LSMT2/LSMT2.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/large/LSMT2/image1.png" alt="LSMT2 large safe locker for gold jewellery cash and document security"></div></a><a class="product-card" href="product_pages/large/LSMT3/LSMT3.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/large/LSMT3/image1.png" alt="LSMT3 large safe locker for gold jewellery cash and document security"></div></a></div></div>
+      <div class="product-group"><h3 class="product-group-title">Medium Safe</h3><div class="product-grid"><a class="product-card" href="product_pages/medium/MSMT1/MSMT1.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/medium/MSMT1/image1.png" alt="MSMT1 medium safe locker for gold jewellery cash and document security"></div></a><a class="product-card" href="product_pages/medium/MSMT2/MSMT2.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/medium/MSMT2/image1.png" alt="MSMT2 medium safe locker for gold jewellery cash and document security"></div></a><a class="product-card" href="product_pages/medium/MSMT3/MSMT3.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/medium/MSMT3/image1.png" alt="MSMT3 medium safe locker for gold jewellery cash and document security"></div></a></div></div>
+      <div class="product-group"><h3 class="product-group-title">Small Safe</h3><div class="product-grid"><a class="product-card" href="product_pages/small/SSMT1/SSMT1.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/small/SSMT1/image1.jpg" alt="SSMT1 small safe locker for gold jewellery cash and document security"></div></a><a class="product-card" href="product_pages/small/SSMT2/SSMT2.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/small/SSMT2/image1.jpg" alt="SSMT2 small safe locker for gold jewellery cash and document security"></div></a></div></div>
+    </section>
+
+    <section class="enquiry-section">
+      <h2 class="enquiry-title">For Custom Order or Product Enquiry Fill up the Form Please</h2>
+      <form class="enquiry-form" id="enquiryForm"><div class="form-row"><div class="form-field"><label for="customer-name">Name</label><input id="customer-name" name="name" type="text"></div><div class="form-field"><label for="customer-phone">Contact No:</label><input id="customer-phone" name="phone" type="tel"></div></div><div class="form-row"><div class="form-field"><label for="customer-zip">ZIP Code:</label><input id="customer-zip" name="zip" type="text" inputmode="numeric" maxlength="6"></div><div class="form-field"><label for="customer-state">State:</label><input id="customer-state" name="state" type="text" readonly></div></div><p class="form-message" id="formMessage"></p><button class="submit-button" type="submit">Submit</button></form>
+    </section>
+
+    <section class="visit-section">
+      <h2 class="visit-title">Contact Or Visit Us</h2><div class="visit-layout"><div class="dealer-panel"><p class="dealer-kicker">Our Authorized Dealer</p><h3 class="dealer-name">Vishwas Enterprise</h3><div class="dealer-block"><p class="dealer-label">Address:</p><p class="dealer-text">49/A Daihatta Road, Kalikatala, Khagra<br>Berhampore, Murshidabad<br>West Bengal 742103</p></div><div class="dealer-block"><p class="dealer-label">Contact No:</p><div class="phone-list"><a class="phone-link" href="tel:+919382865054">+91 93828 65054</a><a class="phone-link" href="tel:+917357529852">+91 73575 29852</a><a class="phone-link" href="tel:+919829286637">+91 98292 86637</a></div></div><a class="location-link" href="https://maps.app.goo.gl/p4H4rL9TnuQdgcpg8" target="_blank" rel="noreferrer">Open Our Location in Google Maps</a></div></div>
+    </section>
+
+    <script>
+      const slidingAdImages = ["image/sliding_image/image1.jpg", "image/sliding_image/image2.jpg", "image/sliding_image/image3.jpg"];
+      let startSlide = 0;
+      let movement = null;
+      let autoTimer = null;
+      const sliderTrack = document.getElementById("sliderTrack");
+      const sliderDots = document.getElementById("sliderDots");
+      function loopIndex(index) { return (index + slidingAdImages.length) % slidingAdImages.length; }
+      function getSliderSize() { const small = window.innerWidth <= 640; return { slideWidth: small ? window.innerWidth * 0.82 : Math.min(window.innerWidth * 0.72, 920), gap: small ? 12 : 22, viewportWidth: window.innerWidth }; }
+      function renderDots() { const centerSlide = loopIndex(startSlide + 1); sliderDots.innerHTML = ""; slidingAdImages.forEach((image, index) => { const dot = document.createElement("button"); dot.className = "slider-dot" + (centerSlide === index ? " active" : ""); dot.type = "button"; dot.setAttribute("aria-label", "Show ad " + (index + 1)); dot.addEventListener("click", () => { if (movement) return; startSlide = loopIndex(index - 1); renderSlider(); restartAutoSlider(); }); sliderDots.appendChild(dot); }); }
+      function renderSlider(phase) { if (!sliderTrack) return; const size = getSliderSize(); const firstPosition = movement === "previous" ? -1 : 0; let centerPosition = 1; if (phase === "moving" && movement === "next") centerPosition = 2; if (phase === "moving" && movement === "previous") centerPosition = 0; const slideAmount = size.slideWidth + size.gap; const trackOffset = size.viewportWidth / 2 - (centerPosition - firstPosition) * slideAmount - size.slideWidth / 2; sliderTrack.style.transform = "translateX(" + trackOffset + "px)"; sliderTrack.style.transition = phase === "moving" ? "transform 560ms ease" : "none"; sliderTrack.innerHTML = ""; for (let position = 0; position < (movement ? 4 : 3); position += 1) { const relative = firstPosition + position; const index = loopIndex(startSlide + relative); const slide = document.createElement("div"); slide.className = "slide" + (relative === centerPosition ? " active" : ""); slide.innerHTML = '<img src="' + slidingAdImages[index] + '" alt="EAGLE SAFE ad ' + (index + 1) + '">'; sliderTrack.appendChild(slide); } renderDots(); }
+      function moveSlider(direction) { if (movement) return; movement = direction; renderSlider("ready"); requestAnimationFrame(() => renderSlider("moving")); window.setTimeout(() => { startSlide = direction === "next" ? loopIndex(startSlide + 1) : loopIndex(startSlide - 1); movement = null; renderSlider(); }, 580); }
+      function restartAutoSlider() { window.clearInterval(autoTimer); autoTimer = window.setInterval(() => moveSlider("next"), 4000); }
+      document.querySelector(".slider-button.previous")?.addEventListener("click", () => { moveSlider("previous"); restartAutoSlider(); }); document.querySelector(".slider-button.next")?.addEventListener("click", () => { moveSlider("next"); restartAutoSlider(); }); window.addEventListener("resize", () => renderSlider()); renderSlider(); restartAutoSlider();
+      document.querySelectorAll("[data-page]").forEach((button) => button.addEventListener("click", () => { window.location.href = button.dataset.page; })); document.querySelectorAll("[data-scroll]").forEach((button) => button.addEventListener("click", () => { document.querySelector("." + button.dataset.scroll)?.scrollIntoView({ behavior: "smooth", block: "start" }); document.querySelector(".quick-nav-dropdown")?.setAttribute("hidden", ""); })); document.querySelector(".quick-nav-menu")?.addEventListener("click", () => { document.querySelector(".quick-nav-dropdown")?.toggleAttribute("hidden"); });
+      const supportedStates = [{ name: "West Bengal", ranges: [[700, 743]] }, { name: "Rajasthan", ranges: [[301, 345]] }, { name: "Jharkhand", ranges: [[813, 835]] }, { name: "Odisha", ranges: [[751, 770]] }]; function getStateFromZip(zipCode) { if (!/^\d{6}$/.test(zipCode)) return ""; const prefix = Number(zipCode.slice(0, 3)); const state = supportedStates.find((item) => item.ranges.some(([start, end]) => prefix >= start && prefix <= end)); return state ? state.name : "Not supported"; }
+      const zipInput = document.getElementById("customer-zip"); const stateInput = document.getElementById("customer-state"); const message = document.getElementById("formMessage"); zipInput?.addEventListener("input", () => { zipInput.value = zipInput.value.replace(/\D/g, "").slice(0, 6); stateInput.value = getStateFromZip(zipInput.value); message.textContent = ""; message.className = "form-message"; });
+      document.getElementById("enquiryForm")?.addEventListener("submit", async (event) => { event.preventDefault(); const name = document.getElementById("customer-name").value.trim(); const phone = document.getElementById("customer-phone").value.trim(); const zip = zipInput.value.trim(); const state = getStateFromZip(zip); message.className = "form-message"; if (!name || !phone || !zip) { message.textContent = "Please fill up all fields before submitting."; message.classList.add("error"); return; } if (!/^\d{6}$/.test(zip)) { message.textContent = "Please enter a valid 6 digit ZIP code."; message.classList.add("error"); return; } if (state === "Not supported") { message.textContent = "We only serve West Bengal, Rajasthan, Jharkhand, and Odisha for the moment."; message.classList.add("error"); window.alert(message.textContent); return; } if (!window.eagleSafeGoogleSheetWebAppUrl) { message.textContent = "Google Sheet connection is not ready yet."; message.classList.add("error"); return; } try { await fetch(window.eagleSafeGoogleSheetWebAppUrl, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ name, phone, zip, state }) }); event.target.reset(); stateInput.value = ""; message.textContent = "Your enquiry has been submitted."; message.classList.add("success"); } catch (error) { message.textContent = "Could not save the enquiry right now."; message.classList.add("error"); } });
+      document.querySelectorAll(".product-image").forEach((image) => image.addEventListener("error", () => { image.style.display = "none"; image.parentElement.classList.add("image-missing"); }));
+    </script>
+  </body>
+</html>
