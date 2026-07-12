@@ -6,11 +6,11 @@
     <title>EAGLE SAFE | Safe Locker for Gold, Jewellery and Home Security</title>
     <meta
       name="description"
-      content="EAGLE SAFE offers strong safe lockers for gold, jewellery, cash, documents, homes, shops and businesses. Explore double door, large, medium and small safe lockers with enquiry service in West Bengal, Rajasthan, Jharkhand and Odisha."
+      content="EAGLE SAFE offers strong safe lockers for gold, jewellery, cash, documents, homes, shops and businesses across India. Explore double door, large, medium, small, counter and triple door safe lockers."
     />
     <meta
       name="keywords"
-      content="EAGLE SAFE, Eagle Safe locker, safe locker, gold locker, jewellery locker, jewelry locker, home safe, office safe, double door safe, large safe, medium safe, small safe, safe locker West Bengal, safe locker Murshidabad, safe locker Berhampore"
+      content="EAGLE SAFE, Eagle Safe locker, safe locker, gold locker, jewellery locker, jewelry locker, home safe, office safe, double door safe, large safe, medium safe, small safe, counter locker, triple door safe, safe locker India, safe locker Murshidabad, safe locker Berhampore"
     />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="EAGLE SAFE" />
@@ -40,12 +40,14 @@
           "postalCode": "742103",
           "addressCountry": "IN"
         },
-        "areaServed": ["West Bengal", "Rajasthan", "Jharkhand", "Odisha"],
+        "areaServed": "India",
         "makesOffer": [
           { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Double Door Safe Locker" } },
           { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Large Safe Locker" } },
           { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Medium Safe Locker" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Small Safe Locker" } }
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Small Safe Locker" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Counter Locker" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Product", "name": "Triple Door Safe Locker" } }
         ]
       }
     </script>
@@ -286,15 +288,31 @@
         color: #1b2230;
       }
 
+      .product-group-title a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .product-group-title a:hover,
+      .product-group-title a:focus-visible {
+        text-decoration: underline;
+      }
+
       .product-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(280px, 420px));
-        gap: 24px;
+        grid-template-columns: repeat(var(--product-slots, 3), minmax(0, 220px));
+        gap: 18px;
         justify-content: center;
+        min-height: 220px;
+        opacity: 1;
+        transition: opacity 1000ms ease;
       }
+
+      .product-grid.is-fading { opacity: 0; }
 
       .product-card {
         display: block;
+        min-width: 0;
         border: 1px solid #e2e6ee;
         border-radius: 8px;
         background: #ffffff;
@@ -315,7 +333,7 @@
         display: grid;
         place-items: center;
         aspect-ratio: 1 / 1;
-        padding: 22px;
+        padding: 14px;
         background: #f0f3f8;
       }
 
@@ -541,6 +559,35 @@
       .map-panel h3 { margin: 0; padding: 18px; font-size: 20px; font-weight: 800; }
       .map-frame-link { display: block; min-height: 320px; }
       .map-frame { width: 100%; height: 100%; min-height: 320px; border: 0; pointer-events: none; }
+
+      .social-section {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto 54px;
+        text-align: center;
+      }
+
+      .social-title { margin: 0 0 18px; font-size: 24px; font-weight: 800; }
+      .social-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+      .social-link {
+        min-width: 118px;
+        padding: 12px 18px;
+        border: 1px solid #cfd6e2;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #14171f;
+        font-weight: 800;
+        text-decoration: none;
+      }
+      .social-link:hover { border-color: #14171f; background: #f0f3f8; }
+
+      .site-footer {
+        padding: 18px 16px;
+        background: #111318;
+        color: #ffffff;
+        text-align: center;
+        font-size: 13px;
+      }
+      .site-footer a { color: #ffffff; font-weight: 800; }
 
       @media (max-width: 640px) {
         .site-header {
@@ -777,6 +824,10 @@
 
     <section class="visit-section"><h2 class="visit-title">Contact Or Visit Us</h2><div class="visit-layout"><div class="dealer-panel"><p class="dealer-kicker">Our Authorized Dealer</p><h3 class="dealer-name">Vishwas Enterprise</h3><div class="dealer-block"><p class="dealer-label">Address:</p><p class="dealer-text">49/A Daihatta Road, Kalikatala, Khagra<br>Berhampore, Murshidabad<br>West Bengal 742103</p></div><div class="dealer-block"><p class="dealer-label">Contact No:</p><div class="phone-list"><a class="phone-link" href="tel:+919057077915">+91 9057077915</a><a class="phone-link" href="tel:+919829286637">+91 9829286637</a><a class="phone-link" href="tel:+919382865054">+91 9382865054</a></div></div><a class="location-link" href="https://maps.app.goo.gl/vHcmkoLdkL368jbp8" target="_blank" rel="noreferrer">Open Our Location in Google Maps</a></div><div class="map-panel"><h3>Google Map View</h3><a class="map-frame-link" href="https://maps.app.goo.gl/vHcmkoLdkL368jbp8" target="_blank" rel="noreferrer"><iframe class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=49%2FA%20Daihatta%20Road%20Kalikatala%20Khagra%20Berhampore%20742103&output=embed"></iframe></a></div></div></section>
 
+    <section class="social-section" aria-labelledby="social-title"><h2 class="social-title" id="social-title">Social Media</h2><div class="social-links"><a class="social-link" href="#" aria-label="EAGLE SAFE on Facebook">Facebook</a><a class="social-link" href="#" aria-label="EAGLE SAFE on Instagram">Instagram</a><a class="social-link" href="#" aria-label="EAGLE SAFE on YouTube">YouTube</a><a class="social-link" href="#" aria-label="EAGLE SAFE on X">X</a></div></section>
+    <footer class="site-footer">This website was designed, created and is maintained by <a href="https://www.google.com/search?q=Tim+W41k3r" target="_blank" rel="noreferrer">Tim W41k3r</a>.</footer>
+
+    <script src="product_catalog.js"></script>
     <script>
       const slidingAdImages = ["image/sliding_image/image1.jpg", "image/sliding_image/image2.jpg", "image/sliding_image/image3.jpg", "image/sliding_image/image4.jpg"];
       let startSlide = 0;
@@ -796,6 +847,68 @@
       const zipInput = document.getElementById("customer-zip"); const stateInput = document.getElementById("customer-state"); const message = document.getElementById("formMessage"); zipInput?.addEventListener("input", () => { zipInput.value = zipInput.value.replace(/\D/g, "").slice(0, 6); stateInput.value = getStateFromZip(zipInput.value); message.textContent = ""; message.className = "form-message"; });
       document.getElementById("enquiryForm")?.addEventListener("submit", async (event) => { event.preventDefault(); const name = document.getElementById("customer-name").value.trim(); const phone = document.getElementById("customer-phone").value.trim(); const zip = zipInput.value.trim(); const state = getStateFromZip(zip); message.className = "form-message"; if (!name || !phone || !zip) { message.textContent = "Please fill up all fields before submitting."; message.classList.add("error"); return; } if (!/^\d{6}$/.test(zip)) { message.textContent = "Please enter a valid 6 digit ZIP code."; message.classList.add("error"); return; }  if (!window.eagleSafeGoogleSheetWebAppUrl) { message.textContent = "Google Sheet connection is not ready yet."; message.classList.add("error"); return; } try { await fetch(window.eagleSafeGoogleSheetWebAppUrl, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ name, phone, zip, state }) }); event.target.reset(); stateInput.value = ""; message.textContent = "Your enquiry has been submitted."; message.classList.add("success"); } catch (error) { message.textContent = "Could not save the enquiry right now."; message.classList.add("error"); } });
       document.querySelectorAll(".product-image").forEach((image) => image.addEventListener("error", () => { image.style.display = "none"; image.parentElement.classList.add("image-missing"); }));
+
+      const productSection = document.querySelector(".product-types");
+      const productCategories = [
+        ["double-door", "Double Door"], ["large-safe", "Large Safe"], ["medium-safe", "Medium Safe"],
+        ["small-safe", "Small Safe"], ["counter-locker", "Counter Locker"], ["triple-door", "Triple Door"]
+      ];
+      const rotationState = new Map();
+      function shuffled(items) { const copy = [...items]; for (let index = copy.length - 1; index > 0; index -= 1) { const next = Math.floor(Math.random() * (index + 1)); [copy[index], copy[next]] = [copy[next], copy[index]]; } return copy; }
+      function cardMarkup(product) { return '<a class="product-card" href="' + product.page + '"><div class="product-image-wrap"><img class="product-image" src="' + product.image + '" alt="' + product.model + ' ' + product.categoryName + ' safe locker"></div></a>'; }
+      function desktopSlots(products) { return Math.min(products.length >= 10 ? 4 : 3, products.length); }
+      function nextBatch(key, products, count) {
+        if (products.length <= count) return products;
+        let state = rotationState.get(key);
+        if (!state || state.count !== count) state = { count, queue: shuffled(products), last: [] };
+        if (state.queue.length < count) {
+          const reserved = new Set([...state.queue.map((product) => product.model), ...state.last]);
+          state.queue.push(...shuffled(products.filter((product) => !reserved.has(product.model))));
+        }
+        const batch = state.queue.splice(0, Math.min(count, products.length));
+        state.last = batch.map((product) => product.model);
+        rotationState.set(key, state);
+        return batch;
+      }
+      function renderHomeProducts(reset = false) {
+        if (!productSection || !window.eagleSafeProducts) return;
+        if (reset) rotationState.clear();
+        const mobile = window.innerWidth <= 640;
+        const groups = productCategories.map(([key, name]) => {
+          const products = window.eagleSafeProducts.filter((product) => product.category === key);
+          const slots = desktopSlots(products);
+          const visible = mobile ? products : nextBatch(key, products, slots);
+          return '<div class="product-group" data-category="' + key + '"><h3 class="product-group-title"><a href="product.html?category=' + key + '">' + name + '</a></h3><div class="product-grid" style="--product-slots:' + slots + '">' + visible.map(cardMarkup).join("") + '</div></div>';
+        }).join("");
+        productSection.innerHTML = '<h2 class="section-title">Our Product Types</h2><p class="section-subtitle">Click the Safe Locker for more info</p>' + groups;
+      }
+      function rotateHomeProducts() {
+        if (window.innerWidth <= 640) return;
+        productCategories.forEach(([key]) => {
+          const products = window.eagleSafeProducts.filter((product) => product.category === key);
+          const slots = desktopSlots(products);
+          if (products.length <= slots) return;
+          const grid = productSection.querySelector('[data-category="' + key + '"] .product-grid');
+          if (!grid) return;
+          grid.classList.add("is-fading");
+          window.setTimeout(() => {
+            grid.innerHTML = nextBatch(key, products, slots).map(cardMarkup).join("");
+            grid.classList.remove("is-fading");
+          }, 1000);
+        });
+      }
+      let productViewMobile = window.innerWidth <= 640;
+      let productRotationTimer = null;
+      function scheduleProductRotation() {
+        window.clearTimeout(productRotationTimer);
+        productRotationTimer = window.setTimeout(() => {
+          rotateHomeProducts();
+          productRotationTimer = window.setTimeout(scheduleProductRotation, 2000);
+        }, 5000);
+      }
+      renderHomeProducts(true);
+      scheduleProductRotation();
+      window.addEventListener("resize", () => { const mobile = window.innerWidth <= 640; if (mobile !== productViewMobile) { productViewMobile = mobile; renderHomeProducts(true); } });
     </script>
   </body>
 </html>
