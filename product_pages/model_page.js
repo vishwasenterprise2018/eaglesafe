@@ -4,6 +4,9 @@
   let imageIndex = 0;
   let unit = "inch";
 
+  const savedTheme = localStorage.getItem("eagleSafeTheme");
+  if (savedTheme === "night") document.body.classList.add("night-theme");
+
   function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"]/g, (match) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[match]));
   }
@@ -98,11 +101,21 @@
       escapeHtml(current.images[imageIndex]) +
       '" alt="Large ' +
       escapeHtml(current.model) +
-      ' product view"></div>';
+      ' product view"></div><button class="theme-toggle" type="button" aria-label="Toggle day or night theme">Night Mode</button>';
     bindEvents();
   }
 
   function bindEvents() {
+    const themeToggle = root.querySelector(".theme-toggle");
+    function updateThemeButton() {
+      themeToggle.textContent = document.body.classList.contains("night-theme") ? "Day Mode" : "Night Mode";
+    }
+    themeToggle?.addEventListener("click", () => {
+      document.body.classList.toggle("night-theme");
+      localStorage.setItem("eagleSafeTheme", document.body.classList.contains("night-theme") ? "night" : "day");
+      updateThemeButton();
+    });
+    updateThemeButton();
     root.querySelector(".previous").onclick = () => {
       imageIndex = imageIndex === 0 ? current.images.length - 1 : imageIndex - 1;
       draw();

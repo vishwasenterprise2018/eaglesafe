@@ -55,24 +55,45 @@
       }
 
       body {
+        --page-bg: #f6f7f9;
+        --panel-bg: #ffffff;
+        --text-main: #14171f;
+        --text-muted: #4f5b6d;
+        --soft-panel: #f0f3f8;
+        --border: #e2e6ee;
+        --button-bg: #14171f;
+        --button-text: #ffffff;
+        --shadow: rgba(20, 23, 31, 0.08);
         margin: 0;
         min-height: 100vh;
         max-width: 100%;
         overflow-x: hidden;
         font-family: "DM Sans", Arial, sans-serif;
-        background: #f6f7f9;
-        color: #14171f;
+        background: var(--page-bg);
+        color: var(--text-main);
+      }
+
+      body.night-theme {
+        --page-bg: #091527;
+        --panel-bg: #10223a;
+        --text-main: #f4f8ff;
+        --text-muted: #b9c7dd;
+        --soft-panel: #162b49;
+        --border: #294365;
+        --button-bg: #d6e7ff;
+        --button-text: #081426;
+        --shadow: rgba(0, 0, 0, 0.24);
       }
 
       .page-header {
         padding: 26px 18px;
         text-align: center;
-        background: #ffffff;
-        border-bottom: 1px solid #e2e6ee;
+        background: var(--panel-bg);
+        border-bottom: 1px solid var(--border);
       }
 
       .brand-link {
-        color: #14171f;
+        color: var(--text-main);
         font-size: 28px;
         font-weight: 800;
         text-decoration: none;
@@ -94,7 +115,7 @@
       .page-intro {
         max-width: 900px;
         margin: -18px auto 34px;
-        color: #4f5b6d;
+        color: var(--text-muted);
         text-align: center;
         font-size: 17px;
         line-height: 1.7;
@@ -122,10 +143,10 @@
         overflow-y: auto;
         overscroll-behavior: contain;
         padding: 20px;
-        border: 1px solid #e2e6ee;
+        border: 1px solid var(--border);
         border-radius: 8px;
-        background: #ffffff;
-        box-shadow: 0 12px 28px rgba(20, 23, 31, 0.08);
+        background: var(--panel-bg);
+        box-shadow: 0 12px 28px var(--shadow);
         scrollbar-width: thin;
       }
 
@@ -141,20 +162,20 @@
       }
 
       .size-filter,
-      .model-filter { margin-top: 24px; padding-top: 20px; border-top: 1px solid #e2e6ee; }
+      .model-filter { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
       .size-filter-title { margin: 0 0 16px; font-size: 17px; font-weight: 800; }
       .range-field { display: grid; gap: 8px; margin-top: 16px; }
       .range-label { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; font-weight: 800; }
-      .range-value { color: #4f5b6d; }
-      .range-input { width: 100%; accent-color: #14171f; cursor: pointer; }
+      .range-value { color: var(--text-muted); }
+      .range-input { width: 100%; accent-color: var(--text-main); cursor: pointer; }
       .range-scale { display: flex; justify-content: space-between; color: #7a8494; font-size: 10px; }
       .model-options { display: grid; gap: 8px; }
       .model-button {
         width: 100%;
         border: 0;
         border-radius: 6px;
-        background: #f0f3f8;
-        color: #3b4658;
+        background: var(--soft-panel);
+        color: var(--text-muted);
         padding: 10px;
         font: inherit;
         font-size: 14px;
@@ -163,19 +184,19 @@
         cursor: pointer;
       }
       .model-button:hover,
-      .model-button.active { background: #14171f; color: #ffffff; }
+      .model-button.active { background: var(--button-bg); color: var(--button-text); }
       .clear-filter {
-        width: 100%; margin-top: 22px; padding: 11px; border: 1px solid #14171f; border-radius: 6px;
-        background: #ffffff; color: #14171f; font: inherit; font-weight: 800; cursor: pointer;
+        width: 100%; margin-top: 22px; padding: 11px; border: 1px solid var(--text-main); border-radius: 6px;
+        background: var(--panel-bg); color: var(--text-main); font: inherit; font-weight: 800; cursor: pointer;
       }
-      .clear-filter:hover { background: #14171f; color: #ffffff; }
+      .clear-filter:hover { background: var(--button-bg); color: var(--button-text); }
 
       .filter-button {
         width: 100%;
         border: 0;
         border-radius: 6px;
         background: transparent;
-        color: #3b4658;
+        color: var(--text-muted);
         padding: 11px 10px;
         font: inherit;
         font-size: 15px;
@@ -186,8 +207,8 @@
 
       .filter-button:hover,
       .filter-button.active {
-        background: #14171f;
-        color: #ffffff;
+        background: var(--button-bg);
+        color: var(--button-text);
       }
 
       .product-grid {
@@ -198,13 +219,13 @@
 
       .product-card {
         display: block;
-        border: 1px solid #e2e6ee;
+        border: 1px solid var(--border);
         border-radius: 8px;
-        background: #ffffff;
+        background: var(--panel-bg);
         overflow: hidden;
         color: inherit;
         text-decoration: none;
-        box-shadow: 0 12px 28px rgba(20, 23, 31, 0.08);
+        box-shadow: 0 12px 28px var(--shadow);
         transition: transform 180ms ease, box-shadow 180ms ease;
       }
 
@@ -212,7 +233,7 @@
       .no-results { grid-column: 1 / -1; margin: 40px 0; color: #687284; text-align: center; font-weight: 800; }
       .product-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 18px 42px rgba(20, 23, 31, 0.13);
+        box-shadow: 0 18px 42px var(--shadow);
       }
 
       .product-image-wrap {
@@ -220,7 +241,7 @@
         place-items: center;
         aspect-ratio: 1 / 1;
         padding: 20px;
-        background: #f0f3f8;
+        background: var(--soft-panel);
       }
 
       .product-image-wrap.image-missing::after {
@@ -250,9 +271,34 @@
 
       .product-category {
         margin: 4px 0 0;
-        color: #687284;
+        color: var(--text-muted);
         font-size: 14px;
         font-weight: 700;
+      }
+
+      .theme-toggle {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 30;
+        display: inline-grid;
+        place-items: center;
+        min-width: 118px;
+        min-height: 44px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--panel-bg);
+        color: var(--text-main);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 14px 34px var(--shadow);
+      }
+
+      .mobile-filter-toggle,
+      .filter-close {
+        display: none;
       }
 
       @media (max-width: 860px) {
@@ -262,10 +308,80 @@
         }
 
         .filter-panel {
-          position: static;
-          max-height: none;
-          overflow-y: visible;
-          padding: 14px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          z-index: 40;
+          display: block;
+          width: min(86vw, 380px);
+          max-width: 380px;
+          height: 100vh;
+          overflow-y: auto;
+          padding: 22px 14px 26px;
+          border-radius: 0 14px 14px 0;
+          transform: translateX(-110%);
+          transition: transform 240ms ease;
+          overscroll-behavior: contain;
+        }
+
+        body.filter-open .filter-panel {
+          transform: translateX(0);
+        }
+
+        body.filter-open::before {
+          content: "";
+          position: fixed;
+          inset: 0;
+          z-index: 35;
+          background: rgba(5, 12, 24, 0.52);
+        }
+
+        .filter-title {
+          padding-right: 48px;
+        }
+
+        .filter-close {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          display: grid;
+          place-items: center;
+          width: 38px;
+          height: 38px;
+          border: 0;
+          border-radius: 50%;
+          background: var(--soft-panel);
+          color: var(--text-main);
+          font: inherit;
+          font-size: 22px;
+          font-weight: 800;
+          cursor: pointer;
+        }
+
+        .mobile-filter-toggle {
+          position: fixed;
+          left: 14px;
+          top: 96px;
+          z-index: 34;
+          display: inline-grid;
+          place-items: center;
+          min-width: 104px;
+          min-height: 42px;
+          border: 1px solid var(--border);
+          border-radius: 999px;
+          background: var(--button-bg);
+          color: var(--button-text);
+          font: inherit;
+          font-size: 14px;
+          font-weight: 800;
+          box-shadow: 0 14px 34px var(--shadow);
+          cursor: pointer;
+        }
+
+        body.filter-open .mobile-filter-toggle,
+        body.filter-open .theme-toggle {
+          display: none !important;
         }
 
         .filter-options {
@@ -307,7 +423,15 @@
           font-size: 34px;
         }
 
-        .filter-panel { overflow: hidden; }
+        .filter-panel { overflow-y: auto; }
+
+        .mobile-filter-toggle {
+          top: 92px;
+          left: 12px;
+          min-width: 92px;
+          min-height: 38px;
+          font-size: 13px;
+        }
 
         .filter-options {
           display: grid;
@@ -329,14 +453,46 @@
         .product-grid {
           grid-template-columns: 1fr;
         }
+
+        .theme-toggle {
+          right: 12px;
+          bottom: 12px;
+          min-width: 104px;
+          min-height: 40px;
+          font-size: 13px;
+        }
       }
     </style>
   </head>
   <body>
     <header class="page-header"><a class="brand-link" href="index.html">EAGLE SAFE</a></header>
-    <main class="product-page"><h1 class="page-title">Our Product</h1><p class="page-intro">Browse EAGLE SAFE safe locker models for gold, jewellery, cash, documents and business security. Filter by locker type, size, volume, weight and model type.</p><div class="product-layout"><aside class="filter-panel" aria-label="Product filters"><h2 class="filter-title">Filter</h2><div class="filter-options" id="categoryFilters"></div><div class="size-filter"><h3 class="size-filter-title">Size, Volume &amp; Weight</h3><label class="range-field" for="heightFilter"><span class="range-label">Height <span class="range-value" id="heightValue">Under 10 ft</span></span><input class="range-input" id="heightFilter" type="range" min="0" max="10" step="1" value="10"><span class="range-scale"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10 ft</span></span></label><label class="range-field" for="widthFilter"><span class="range-label">Width <span class="range-value" id="widthValue">Under 10 ft</span></span><input class="range-input" id="widthFilter" type="range" min="0" max="10" step="1" value="10"><span class="range-scale"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10 ft</span></span></label><label class="range-field" for="volumeFilter"><span class="range-label">Volume <span class="range-value" id="volumeValue">0 L+</span></span><input class="range-input" id="volumeFilter" type="range" min="0" max="2000" step="50" value="0"><span class="range-scale"><span>0L+</span><span>500L+</span><span>1000L+</span><span>1500L+</span><span>2000L+</span></span></label><label class="range-field" for="weightFilter"><span class="range-label">Weight <span class="range-value" id="weightValue">0 KG+</span></span><input class="range-input" id="weightFilter" type="range" min="0" max="2500" step="50" value="0"><span class="range-scale"><span>0KG+</span><span>500KG+</span><span>1000KG+</span><span>1500KG+</span><span>2500KG+</span></span></label></div><div class="model-filter"><h3 class="size-filter-title">Model Type</h3><div class="model-options" id="modelTypeFilters"></div><button class="clear-filter" id="clearFilters" type="button">Clear Filters</button></div></aside><section class="product-grid" id="productGrid" aria-label="Products"></section></div></main>
+    <main class="product-page"><h1 class="page-title">Our Product</h1><p class="page-intro">Browse EAGLE SAFE safe locker models for gold, jewellery, cash, documents and business security. Filter by locker type, size, volume, weight and model type.</p><div class="product-layout"><aside class="filter-panel" aria-label="Product filters"><button class="filter-close" type="button" aria-label="Close filters">x</button><h2 class="filter-title">Filter</h2><div class="filter-options" id="categoryFilters"></div><div class="size-filter"><h3 class="size-filter-title">Size, Volume &amp; Weight</h3><label class="range-field" for="heightFilter"><span class="range-label">Height <span class="range-value" id="heightValue">Under 10 ft</span></span><input class="range-input" id="heightFilter" type="range" min="0" max="10" step="1" value="10"><span class="range-scale"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10 ft</span></span></label><label class="range-field" for="widthFilter"><span class="range-label">Width <span class="range-value" id="widthValue">Under 10 ft</span></span><input class="range-input" id="widthFilter" type="range" min="0" max="10" step="1" value="10"><span class="range-scale"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10 ft</span></span></label><label class="range-field" for="volumeFilter"><span class="range-label">Volume <span class="range-value" id="volumeValue">0 L+</span></span><input class="range-input" id="volumeFilter" type="range" min="0" max="2000" step="50" value="0"><span class="range-scale"><span>0L+</span><span>500L+</span><span>1000L+</span><span>1500L+</span><span>2000L+</span></span></label><label class="range-field" for="weightFilter"><span class="range-label">Weight <span class="range-value" id="weightValue">0 KG+</span></span><input class="range-input" id="weightFilter" type="range" min="0" max="2500" step="50" value="0"><span class="range-scale"><span>0KG+</span><span>500KG+</span><span>1000KG+</span><span>1500KG+</span><span>2500KG+</span></span></label></div><div class="model-filter"><h3 class="size-filter-title">Model Type</h3><div class="model-options" id="modelTypeFilters"></div><button class="clear-filter" id="clearFilters" type="button">Clear Filters</button></div></aside><section class="product-grid" id="productGrid" aria-label="Products"></section></div></main>
+    <button class="mobile-filter-toggle" type="button" aria-label="Open filters">Filter</button>
+    <button class="theme-toggle" type="button" aria-label="Toggle day or night theme">Night Mode</button>
     <script src="product_catalog.js"></script>
     <script>
+      const themeToggle = document.querySelector(".theme-toggle");
+      const savedTheme = localStorage.getItem("eagleSafeTheme");
+      if (savedTheme === "night") document.body.classList.add("night-theme");
+      function updateThemeButton() { themeToggle.textContent = document.body.classList.contains("night-theme") ? "Day Mode" : "Night Mode"; }
+      themeToggle?.addEventListener("click", () => { document.body.classList.toggle("night-theme"); localStorage.setItem("eagleSafeTheme", document.body.classList.contains("night-theme") ? "night" : "day"); updateThemeButton(); });
+      updateThemeButton();
+      const mobileFilterToggle = document.querySelector(".mobile-filter-toggle");
+      const filterClose = document.querySelector(".filter-close");
+      function setFilterOpen(open) {
+        document.body.classList.toggle("filter-open", open);
+        if (mobileFilterToggle) {
+          mobileFilterToggle.textContent = open ? "Close" : "Filter";
+          mobileFilterToggle.setAttribute("aria-label", open ? "Close filters" : "Open filters");
+          mobileFilterToggle.style.display = open ? "none" : "";
+        }
+        if (themeToggle) {
+          themeToggle.style.display = open ? "none" : "";
+        }
+      }
+      mobileFilterToggle?.addEventListener("click", () => setFilterOpen(!document.body.classList.contains("filter-open")));
+      filterClose?.addEventListener("click", () => setFilterOpen(false));
+      document.addEventListener("keydown", (event) => { if (event.key === "Escape") setFilterOpen(false); });
       const categories = [["all", "All Products"], ["double-door", "Double Door"], ["large-safe", "Large Safe"], ["medium-safe", "Medium Safe"], ["small-safe", "Small Safe"], ["counter-locker", "Counter Locker"], ["triple-door", "Triple Door"]];
       const modelTypes = [["all", "All Models"], ["DEFENDER PLUS", "Defender Plus"], ["DEFENDER PRIME", "Defender Prime"], ["CLASSIC DEFENDER PLUS", "Classic Defender Plus"], ["OTHERS", "Others"]];
       const categoryFilters = document.getElementById("categoryFilters");
