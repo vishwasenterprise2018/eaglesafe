@@ -1,8 +1,0 @@
-H 6.6 foot
-W 3.3 foot
-L 3.3 foot
-
-Lock types:
-Key Lock
-Flower Lock
-Combination Lock
