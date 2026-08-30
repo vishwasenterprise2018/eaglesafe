@@ -124,6 +124,11 @@
         color: var(--text-main);
       }
 
+      .button:disabled {
+        opacity: 0.48;
+        cursor: not-allowed;
+      }
+
       .countdown {
         display: inline-grid;
         place-items: center;
@@ -518,9 +523,12 @@
       let hitTestSource = null;
       let gl = null;
       let latestHitMatrix = null;
+      let lastReliableHitMatrix = null;
+      let lastReliableHitTime = 0;
       let arPoints = [];
       let markingStarted = false;
       let arOverlay = null;
+      const hitGraceMs = 1200;
 
       function showScreen(screen) {
         [introScreen, unsupportedScreen, measureScreen, resultScreen].forEach((item) => {
@@ -562,6 +570,8 @@
         arPoints = [];
         markingStarted = false;
         latestHitMatrix = null;
+        lastReliableHitMatrix = null;
+        lastReliableHitTime = 0;
         startMarkingButton.disabled = true;
         addPointButton.disabled = true;
         finishButton.disabled = true;
@@ -644,8 +654,11 @@
         if (hitTestResults.length) {
           const hitPose = hitTestResults[0].getPose(xrReferenceSpace);
           latestHitMatrix = hitPose.transform.matrix;
+          lastReliableHitMatrix = latestHitMatrix;
+          lastReliableHitTime = time;
           startMarkingButton.disabled = markingStarted;
           addPointButton.disabled = !markingStarted || arPoints.length >= 4;
+          reticle.classList.toggle("is-paused", !markingStarted);
           trackingStatus.textContent =
             arPoints.length === 4
               ? "Corners selected. Tap Finish."
@@ -653,11 +666,15 @@
                 ? "Marking mode active. Keep the target on each corner."
                 : "Surface found. Tap Start Marking Corners.";
         } else {
-          latestHitMatrix = null;
+          const canUseRecentHit = markingStarted && lastReliableHitMatrix && time - lastReliableHitTime < hitGraceMs;
+          latestHitMatrix = canUseRecentHit ? lastReliableHitMatrix : null;
           startMarkingButton.disabled = true;
-          addPointButton.disabled = true;
+          addPointButton.disabled = !canUseRecentHit || arPoints.length >= 4;
+          reticle.classList.toggle("is-paused", !canUseRecentHit);
           trackingStatus.textContent = markingStarted
-            ? "Keep the marked area in view and move slowly."
+            ? canUseRecentHit
+              ? "Marking mode active. You can add the next point."
+              : "Move slowly until the target is steady again."
             : "Move phone slowly to find a surface...";
         }
 
@@ -798,6 +815,7 @@
       }
 
       function startMarkingCorners() {
+        if (!latestHitMatrix && lastReliableHitMatrix) latestHitMatrix = lastReliableHitMatrix;
         if (!latestHitMatrix) return;
         markingStarted = true;
         startMarkingButton.disabled = true;
