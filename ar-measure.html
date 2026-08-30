@@ -137,7 +137,7 @@
         font-weight: 800;
       }
 
-      .camera-stage {
+      .ar-stage {
         position: relative;
         min-height: 76vh;
         overflow: hidden;
@@ -145,21 +145,15 @@
         background: #050c18;
       }
 
-      .camera-video,
-      .measure-layer {
+      .ar-canvas {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
       }
 
-      .camera-video {
-        object-fit: cover;
-      }
-
-      .measure-layer {
-        z-index: 2;
-        touch-action: none;
+      .ar-canvas {
+        background: #050c18;
       }
 
       .measure-hud {
@@ -177,6 +171,58 @@
         box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
       }
 
+      .reticle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 4;
+        width: 44px;
+        height: 44px;
+        border: 3px solid #16a34a;
+        border-radius: 50%;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 0 6px rgba(22, 163, 74, 0.18);
+      }
+
+      .reticle::before,
+      .reticle::after {
+        content: "";
+        position: absolute;
+        background: #16a34a;
+      }
+
+      .reticle::before {
+        left: 50%;
+        top: -12px;
+        width: 3px;
+        height: 68px;
+        transform: translateX(-50%);
+      }
+
+      .reticle::after {
+        top: 50%;
+        left: -12px;
+        width: 68px;
+        height: 3px;
+        transform: translateY(-50%);
+      }
+
+      .ar-point-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .ar-point-chip {
+        padding: 6px 9px;
+        border-radius: 999px;
+        background: #e8f7ee;
+        color: #0f6b47;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
       .measure-hud p {
         margin: 0;
         font-size: 14px;
@@ -189,16 +235,15 @@
         font-weight: 700;
       }
 
-      .dot {
-        fill: #16a34a;
-        stroke: #ffffff;
-        stroke-width: 4;
-      }
-
-      .shape-line {
-        fill: rgba(22, 163, 74, 0.18);
-        stroke: #16a34a;
-        stroke-width: 4;
+      .status-pill {
+        display: inline-block;
+        width: fit-content;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #fff7d6;
+        color: #7a4f00;
+        font-size: 12px;
+        font-weight: 800;
       }
 
       .results-grid {
@@ -354,13 +399,16 @@
       </section>
 
       <section class="screen" id="measureScreen" hidden>
-        <div class="camera-stage">
-          <video class="camera-video" id="cameraVideo" autoplay playsinline muted></video>
-          <svg class="measure-layer" id="measureLayer"></svg>
+        <div class="ar-stage">
+          <canvas class="ar-canvas" id="arCanvas"></canvas>
+          <div class="reticle" aria-hidden="true"></div>
           <div class="measure-hud">
-            <p id="stepText">Tap the top-left corner of the space.</p>
-            <span class="hint">Tap 4 corners: top-left, top-right, bottom-right, bottom-left.</span>
+            <span class="status-pill" id="trackingStatus">Searching for surface...</span>
+            <p id="stepText">Move the center target to the top-left corner, then tap Add Point.</p>
+            <span class="hint">Mark 4 corners: top-left, top-right, bottom-right, bottom-left.</span>
+            <div class="ar-point-list" id="pointList"></div>
             <div class="action-row">
+              <button class="button" id="addPointButton" type="button" disabled>Add Point</button>
               <button class="button" id="resetButton" type="button">Reset</button>
               <button class="button secondary" id="finishButton" type="button" disabled>Finish</button>
             </div>
@@ -418,15 +466,22 @@
       const measureScreen = document.getElementById("measureScreen");
       const resultScreen = document.getElementById("resultScreen");
       const startButton = document.getElementById("startButton");
+      const addPointButton = document.getElementById("addPointButton");
       const resetButton = document.getElementById("resetButton");
       const finishButton = document.getElementById("finishButton");
       const measureAgainButton = document.getElementById("measureAgainButton");
-      const cameraVideo = document.getElementById("cameraVideo");
-      const measureLayer = document.getElementById("measureLayer");
+      const arCanvas = document.getElementById("arCanvas");
       const stepText = document.getElementById("stepText");
+      const trackingStatus = document.getElementById("trackingStatus");
+      const pointList = document.getElementById("pointList");
       const steps = ["top-left", "top-right", "bottom-right", "bottom-left"];
-      let points = [];
-      let cameraStream = null;
+
+      let xrSession = null;
+      let xrReferenceSpace = null;
+      let hitTestSource = null;
+      let gl = null;
+      let latestHitMatrix = null;
+      let arPoints = [];
 
       function showScreen(screen) {
         [introScreen, unsupportedScreen, measureScreen, resultScreen].forEach((item) => {
@@ -448,9 +503,9 @@
         }, 1000);
       }
 
-      async function isArSupported() {
+      async function isRealArSupported() {
         const mobileLike = window.matchMedia("(max-width: 780px), (pointer: coarse)").matches;
-        if (!mobileLike || !navigator.xr || !navigator.xr.isSessionSupported) return false;
+        if (!mobileLike || !window.isSecureContext || !navigator.xr || !navigator.xr.isSessionSupported) return false;
         try {
           return await navigator.xr.isSessionSupported("immersive-ar");
         } catch (error) {
@@ -458,91 +513,136 @@
         }
       }
 
-      function canTryCameraMeasurement() {
-        const mobileLike = window.matchMedia("(max-width: 780px), (pointer: coarse)").matches;
-        const cameraReady = Boolean(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-        return mobileLike && cameraReady && window.isSecureContext;
+      function updatePointList() {
+        pointList.innerHTML = steps
+          .map((label, index) => '<span class="ar-point-chip">' + label + ': ' + (arPoints[index] ? "set" : "waiting") + "</span>")
+          .join("");
       }
 
-      async function startCameraMeasure() {
+      function resetMeasurement() {
+        arPoints = [];
+        latestHitMatrix = null;
+        addPointButton.disabled = true;
+        finishButton.disabled = true;
+        trackingStatus.textContent = "Searching for surface...";
+        stepText.textContent = "Move the center target to the top-left corner, then tap Add Point.";
+        updatePointList();
+      }
+
+      function worldPointFromMatrix(matrix) {
+        return {
+          x: matrix[12],
+          y: matrix[13],
+          z: matrix[14],
+        };
+      }
+
+      function distanceMeters(a, b) {
+        return Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
+      }
+
+      function metersToFeet(value) {
+        return value * 3.28084;
+      }
+
+      async function startRealArMeasure() {
+        if (!(await isRealArSupported())) {
+          startUnsupportedCountdown();
+          return;
+        }
+
         try {
-          cameraStream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: { ideal: "environment" } },
-            audio: false,
-          });
-          cameraVideo.srcObject = cameraStream;
-          resetMeasurement();
           showScreen(measureScreen);
+          resetMeasurement();
+
+          gl = arCanvas.getContext("webgl", { xrCompatible: true, alpha: true });
+          if (!gl) throw new Error("WebGL not available");
+
+          xrSession = await navigator.xr.requestSession("immersive-ar", {
+            requiredFeatures: ["hit-test"],
+            optionalFeatures: ["dom-overlay", "local-floor"],
+            domOverlay: { root: document.body },
+          });
+
+          xrSession.updateRenderState({ baseLayer: new XRWebGLLayer(xrSession, gl) });
+          xrReferenceSpace = await xrSession.requestReferenceSpace("local");
+          const viewerSpace = await xrSession.requestReferenceSpace("viewer");
+          hitTestSource = await xrSession.requestHitTestSource({ space: viewerSpace });
+
+          xrSession.addEventListener("end", () => {
+            xrSession = null;
+            hitTestSource = null;
+          });
+
+          xrSession.requestAnimationFrame(onXrFrame);
         } catch (error) {
+          await stopArSession();
           startUnsupportedCountdown();
         }
       }
 
-      function resetMeasurement() {
-        points = [];
-        finishButton.disabled = true;
-        stepText.textContent = "Tap the top-left corner of the space.";
-        drawMeasurement();
-      }
+      function onXrFrame(time, frame) {
+        const session = frame.session;
+        session.requestAnimationFrame(onXrFrame);
 
-      function drawMeasurement() {
-        measureLayer.innerHTML = "";
-        const width = measureLayer.clientWidth;
-        const height = measureLayer.clientHeight;
-        measureLayer.setAttribute("viewBox", "0 0 " + width + " " + height);
+        const pose = frame.getViewerPose(xrReferenceSpace);
+        if (!pose || !hitTestSource) return;
 
-        if (points.length > 1) {
-          const polygonPoints = points.map((point) => point.x + "," + point.y).join(" ");
-          const shape = document.createElementNS("http://www.w3.org/2000/svg", points.length === 4 ? "polygon" : "polyline");
-          shape.setAttribute("points", polygonPoints);
-          shape.setAttribute("class", "shape-line");
-          measureLayer.appendChild(shape);
+        const hitTestResults = frame.getHitTestResults(hitTestSource);
+        if (hitTestResults.length) {
+          const hitPose = hitTestResults[0].getPose(xrReferenceSpace);
+          latestHitMatrix = hitPose.transform.matrix;
+          addPointButton.disabled = arPoints.length >= 4;
+          trackingStatus.textContent = "Surface found. Move target and add point.";
+        } else {
+          latestHitMatrix = null;
+          addPointButton.disabled = true;
+          trackingStatus.textContent = "Move phone slowly to find a surface...";
         }
 
-        points.forEach((point) => {
-          const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-          dot.setAttribute("cx", point.x);
-          dot.setAttribute("cy", point.y);
-          dot.setAttribute("r", "8");
-          dot.setAttribute("class", "dot");
-          measureLayer.appendChild(dot);
-        });
+        const layer = session.renderState.baseLayer;
+        gl.bindFramebuffer(gl.FRAMEBUFFER, layer.framebuffer);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       }
 
-      function addPoint(event) {
-        if (points.length >= 4) return;
-        const rect = measureLayer.getBoundingClientRect();
-        points.push({
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top,
-        });
-        drawMeasurement();
+      function addArPoint() {
+        if (!latestHitMatrix || arPoints.length >= 4) return;
+        arPoints.push(worldPointFromMatrix(latestHitMatrix));
+        updatePointList();
 
-        if (points.length < 4) {
-          stepText.textContent = "Tap the " + steps[points.length] + " corner of the space.";
+        if (arPoints.length < 4) {
+          stepText.textContent = "Move the center target to the " + steps[arPoints.length] + " corner, then tap Add Point.";
         } else {
-          stepText.textContent = "Corners selected. Tap Finish to see matching lockers.";
+          stepText.textContent = "All corners selected. Tap Finish to see matching lockers.";
+          addPointButton.disabled = true;
           finishButton.disabled = false;
         }
       }
 
-      function stopCamera() {
-        if (!cameraStream) return;
-        cameraStream.getTracks().forEach((track) => track.stop());
-        cameraStream = null;
+      async function stopArSession() {
+        if (hitTestSource) {
+          hitTestSource.cancel?.();
+          hitTestSource = null;
+        }
+        if (xrSession) {
+          const session = xrSession;
+          xrSession = null;
+          try {
+            await session.end();
+          } catch (error) {}
+        }
       }
 
-      function estimatedFeet() {
-        const xs = points.map((point) => point.x);
-        const ys = points.map((point) => point.y);
-        const selectedWidth = Math.max(...xs) - Math.min(...xs);
-        const selectedHeight = Math.max(...ys) - Math.min(...ys);
-        const screenWidth = Math.max(1, measureLayer.clientWidth);
-        const screenHeight = Math.max(1, measureLayer.clientHeight);
+      function measuredFeet() {
+        const topWidth = distanceMeters(arPoints[0], arPoints[1]);
+        const bottomWidth = distanceMeters(arPoints[3], arPoints[2]);
+        const leftHeight = distanceMeters(arPoints[0], arPoints[3]);
+        const rightHeight = distanceMeters(arPoints[1], arPoints[2]);
 
         return {
-          width: Math.max(1, Math.min(10, selectedWidth / screenWidth * 7.5)),
-          height: Math.max(1, Math.min(10, selectedHeight / screenHeight * 9)),
+          width: metersToFeet((topWidth + bottomWidth) / 2),
+          height: metersToFeet((leftHeight + rightHeight) / 2),
         };
       }
 
@@ -577,34 +677,29 @@
           : '<p class="text">No ready model exactly matches this space. Please use Custom Locker Enquiry.</p>';
       }
 
-      function finishMeasurement() {
-        if (points.length !== 4) return;
-        const estimate = estimatedFeet();
-        stopCamera();
-        document.getElementById("heightResult").textContent = estimate.height.toFixed(1) + " ft";
-        document.getElementById("widthResult").textContent = estimate.width.toFixed(1) + " ft";
-        renderSuggestions(estimate.width, estimate.height);
+      async function finishMeasurement() {
+        if (arPoints.length !== 4) return;
+        const measurement = measuredFeet();
+        await stopArSession();
+        document.getElementById("heightResult").textContent = measurement.height.toFixed(1) + " ft";
+        document.getElementById("widthResult").textContent = measurement.width.toFixed(1) + " ft";
+        renderSuggestions(measurement.width, measurement.height);
         showScreen(resultScreen);
       }
 
       startButton.addEventListener("click", async () => {
         startButton.disabled = true;
-        startButton.textContent = "Checking...";
-        const webXrReady = await isArSupported();
-
-        if (webXrReady || canTryCameraMeasurement()) {
-          await startCameraMeasure();
-        } else {
-          startUnsupportedCountdown();
-        }
+        startButton.textContent = "Checking AR...";
+        await startRealArMeasure();
+        startButton.disabled = false;
+        startButton.textContent = "Start Measurement";
       });
 
-      measureLayer.addEventListener("click", addPoint);
+      addPointButton.addEventListener("click", addArPoint);
       resetButton.addEventListener("click", resetMeasurement);
       finishButton.addEventListener("click", finishMeasurement);
-      measureAgainButton.addEventListener("click", startCameraMeasure);
-      window.addEventListener("pagehide", stopCamera);
-      window.addEventListener("resize", drawMeasurement);
+      measureAgainButton.addEventListener("click", startRealArMeasure);
+      window.addEventListener("pagehide", stopArSession);
     </script>
   </body>
 </html>
