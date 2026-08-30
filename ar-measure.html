@@ -496,6 +496,7 @@
       let latestHitMatrix = null;
       let arPoints = [];
       let markingStarted = false;
+      let arOverlay = null;
 
       function showScreen(screen) {
         [introScreen, unsupportedScreen, measureScreen, resultScreen].forEach((item) => {
@@ -572,6 +573,8 @@
           showScreen(measureScreen);
           resetMeasurement();
 
+          arCanvas.width = window.innerWidth * window.devicePixelRatio;
+          arCanvas.height = window.innerHeight * window.devicePixelRatio;
           gl = arCanvas.getContext("webgl", {
             xrCompatible: true,
             alpha: true,
@@ -628,9 +631,104 @@
 
         const layer = session.renderState.baseLayer;
         gl.bindFramebuffer(gl.FRAMEBUFFER, layer.framebuffer);
+        gl.viewport(0, 0, layer.framebufferWidth, layer.framebufferHeight);
         gl.clearColor(0, 0, 0, 0);
         gl.clearDepth(1);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        renderArOverlay(pose, layer);
+      }
+
+      function createArOverlay() {
+        const vertexShaderSource = `
+          attribute vec2 position;
+          uniform float pointSize;
+          void main() {
+            gl_Position = vec4(position, 0.0, 1.0);
+            gl_PointSize = pointSize;
+          }
+        `;
+        const fragmentShaderSource = `
+          precision mediump float;
+          uniform vec4 color;
+          void main() {
+            gl_FragColor = color;
+          }
+        `;
+
+        function shader(type, source) {
+          const item = gl.createShader(type);
+          gl.shaderSource(item, source);
+          gl.compileShader(item);
+          return item;
+        }
+
+        const program = gl.createProgram();
+        gl.attachShader(program, shader(gl.VERTEX_SHADER, vertexShaderSource));
+        gl.attachShader(program, shader(gl.FRAGMENT_SHADER, fragmentShaderSource));
+        gl.linkProgram(program);
+
+        return {
+          program,
+          buffer: gl.createBuffer(),
+          position: gl.getAttribLocation(program, "position"),
+          color: gl.getUniformLocation(program, "color"),
+          pointSize: gl.getUniformLocation(program, "pointSize"),
+        };
+      }
+
+      function multiplyMatrix(a, b) {
+        const result = new Float32Array(16);
+        for (let row = 0; row < 4; row += 1) {
+          for (let column = 0; column < 4; column += 1) {
+            result[column * 4 + row] =
+              a[0 * 4 + row] * b[column * 4 + 0] +
+              a[1 * 4 + row] * b[column * 4 + 1] +
+              a[2 * 4 + row] * b[column * 4 + 2] +
+              a[3 * 4 + row] * b[column * 4 + 3];
+          }
+        }
+        return result;
+      }
+
+      function projectPoint(point, view) {
+        const matrix = multiplyMatrix(view.projectionMatrix, view.transform.inverse.matrix);
+        const x = matrix[0] * point.x + matrix[4] * point.y + matrix[8] * point.z + matrix[12];
+        const y = matrix[1] * point.x + matrix[5] * point.y + matrix[9] * point.z + matrix[13];
+        const w = matrix[3] * point.x + matrix[7] * point.y + matrix[11] * point.z + matrix[15];
+        if (!w || w <= 0) return null;
+        return [x / w, y / w];
+      }
+
+      function drawOverlayShape(points, mode, color, pointSize) {
+        if (!points.length) return;
+        gl.useProgram(arOverlay.program);
+        gl.bindBuffer(gl.ARRAY_BUFFER, arOverlay.buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points.flat()), gl.DYNAMIC_DRAW);
+        gl.enableVertexAttribArray(arOverlay.position);
+        gl.vertexAttribPointer(arOverlay.position, 2, gl.FLOAT, false, 0, 0);
+        gl.uniform4fv(arOverlay.color, color);
+        gl.uniform1f(arOverlay.pointSize, pointSize || 12);
+        gl.drawArrays(mode, 0, points.length);
+      }
+
+      function renderArOverlay(pose, layer) {
+        if (!arOverlay) arOverlay = createArOverlay();
+        const view = pose.views[0];
+        if (!view) return;
+
+        const viewport = layer.getViewport(view);
+        gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height);
+        gl.disable(gl.DEPTH_TEST);
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+        const projectedPoints = arPoints.map((point) => projectPoint(point, view)).filter(Boolean);
+        if (projectedPoints.length > 1) {
+          const linePoints = projectedPoints.length === 4 ? [...projectedPoints, projectedPoints[0]] : projectedPoints;
+          drawOverlayShape(linePoints, gl.LINE_STRIP, [0.09, 0.64, 0.29, 1], 12);
+        }
+        drawOverlayShape(projectedPoints, gl.POINTS, [0.09, 0.64, 0.29, 1], 18);
       }
 
       function startMarkingCorners() {
