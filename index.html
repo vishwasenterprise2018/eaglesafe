@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta name="trustpilot-one-time-domain-verification-id" content="a6a9d137-ce12-4bb5-a2e4-6443cb5d51a8"/>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EAGLE SAFE | Safe Locker for Gold, Jewellery and Home Security</title>
@@ -142,6 +141,10 @@
 
       .quick-nav-button:hover {
         color: var(--text-muted);
+      }
+
+      .ar-measure-button {
+        color: #0f6b47;
       }
 
       .quick-nav-menu {
@@ -817,6 +820,77 @@
       }
       .social-link:hover { border-color: var(--text-main); background: var(--soft-panel); }
 
+      .ar-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        display: grid;
+        place-items: center;
+        padding: 18px;
+        background: rgba(5, 12, 24, 0.62);
+      }
+
+      .ar-modal[hidden] {
+        display: none;
+      }
+
+      .ar-modal-card {
+        width: min(420px, 100%);
+        padding: 26px;
+        border-radius: 8px;
+        background: var(--panel-bg);
+        color: var(--text-main);
+        text-align: center;
+        box-shadow: 0 22px 64px rgba(0, 0, 0, 0.28);
+      }
+
+      .ar-modal-card h2 {
+        margin: 0 0 8px;
+        font-size: 25px;
+        font-weight: 800;
+      }
+
+      .ar-modal-card p {
+        margin: 0 auto 18px;
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-weight: 600;
+      }
+
+      .ar-qr {
+        width: min(240px, 74vw);
+        height: auto;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .ar-mobile-link,
+      .ar-modal-close {
+        display: inline-grid;
+        place-items: center;
+        min-height: 42px;
+        margin-top: 16px;
+        padding: 0 18px;
+        border-radius: 999px;
+        font: inherit;
+        font-weight: 800;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .ar-mobile-link {
+        background: var(--button-bg);
+        color: var(--button-text);
+      }
+
+      .ar-modal-close {
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text-main);
+      }
+
       .theme-toggle {
         position: fixed;
         right: 18px;
@@ -1102,6 +1176,7 @@
     </style>
   </head>
   <body>
+    <!-- Header and main navigation -->
     <header class="site-header">
       <h1 class="brand-name">EAGLE SAFE</h1>
     </header>
@@ -1109,12 +1184,14 @@
     <nav class="quick-nav" aria-label="Main quick links">
       <div class="quick-nav-inner">
         <button class="quick-nav-button" type="button" data-page="product.html">OUR PRODUCT</button>
+        <button class="quick-nav-button ar-measure-button mobile-hidden" type="button" data-ar-measure>AR MEASURE</button>
         <button class="quick-nav-button mobile-hidden" type="button" data-scroll="intro-section">OUR SERVICE</button>
         <button class="quick-nav-button mobile-hidden" type="button" data-scroll="enquiry-section">ENQUIRY</button>
         <button class="quick-nav-button" type="button" data-scroll="visit-section">CONTACT US</button>
         <button class="quick-nav-button quick-nav-menu" type="button" aria-label="Open menu">...</button>
         <div class="quick-nav-dropdown" hidden>
           <button class="quick-nav-button" type="button" data-page="product.html">OUR PRODUCT</button>
+          <button class="quick-nav-button ar-measure-button" type="button" data-ar-measure>AR MEASURE</button>
           <button class="quick-nav-button" type="button" data-scroll="intro-section">OUR SERVICE</button>
           <button class="quick-nav-button" type="button" data-scroll="enquiry-section">ENQUIRY</button>
           <button class="quick-nav-button" type="button" data-scroll="visit-section">CONTACT US</button>
@@ -1122,6 +1199,7 @@
       </div>
     </nav>
 
+    <!-- Sliding advertisement carousel -->
     <section class="sliding-ad" aria-label="Sliding ad">
       <div class="slider-frame">
         <div class="slider-track" id="sliderTrack"></div>
@@ -1131,69 +1209,424 @@
       <div class="slider-dots" aria-label="Choose ad" id="sliderDots"></div>
     </section>
 
+    <!-- Main business introduction -->
     <section class="intro-section">
       <h2>Safe Lockers Built for Gold, Jewellery, Cash and Documents</h2>
-      <p>EAGLE SAFE provides reliable safe lockers for homes, jewellery stores, offices and businesses. Explore strong locker models with multiple lock options, custom order support and all India enquiry service.</p>
-      <div class="intro-actions"><a class="intro-action" href="product.html">View Products</a><button class="intro-action secondary" type="button" data-scroll="enquiry-section">Enquire Now</button></div>
+      <p>
+        EAGLE SAFE provides reliable safe lockers for homes, jewellery stores, offices and businesses. Explore strong
+        locker models with multiple lock options, custom order support and all India enquiry service.
+      </p>
+      <div class="intro-actions">
+        <a class="intro-action" href="product.html">View Products</a>
+        <button class="intro-action secondary" type="button" data-scroll="enquiry-section">Enquire Now</button>
+      </div>
     </section>
 
+    <!-- Product categories: JavaScript fills this section from product_catalog.js. -->
+    <section class="product-types">
+      <h2 class="section-title">Our Product Types</h2>
+      <p class="section-subtitle">Click the Safe Locker for more info</p>
+      <div class="product-showcase" aria-live="polite"></div>
+    </section>
 
-    <section class="product-types"><h2 class="section-title">Our Product Types</h2><p class="section-subtitle">Click the Safe Locker for more info</p><div class="product-group"><h3 class="product-group-title">Double Door</h3><div class="product-grid"><a class="product-card" data-filter="double-door" href="product_pages/double_door/DDMT1/DDMT1.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/double_door/DDMT1/image1.png" alt="DDMT1 Double Door safe locker"></div></a><a class="product-card" data-filter="double-door" href="product_pages/double_door/DDMT2/DDMT2.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/double_door/DDMT2/image1.png" alt="DDMT2 Double Door safe locker"></div></a></div></div><div class="product-group"><h3 class="product-group-title">Large Safe</h3><div class="product-grid"><a class="product-card" data-filter="large-safe" href="product_pages/large/LSMT1/LSMT1.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/large/LSMT1/image1.png" alt="LSMT1 Large Safe safe locker"></div></a><a class="product-card" data-filter="large-safe" href="product_pages/large/LSMT2/LSMT2.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/large/LSMT2/image1.png" alt="LSMT2 Large Safe safe locker"></div></a><a class="product-card" data-filter="large-safe" href="product_pages/large/LSMT3/LSMT3.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/large/LSMT3/image1.png" alt="LSMT3 Large Safe safe locker"></div></a><a class="product-card" data-filter="large-safe" href="product_pages/large/LSMT4/LSMT4.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/large/LSMT4/Image1.png" alt="LSMT4 Large Safe safe locker"></div></a><a class="product-card" data-filter="large-safe" href="product_pages/large/LSMT5/LSMT5.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/large/LSMT5/Image1.png" alt="LSMT5 Large Safe safe locker"></div></a><a class="product-card" data-filter="large-safe" href="product_pages/large/LSMT6/LSMT6.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/large/LSMT6/image1.png" alt="LSMT6 Large Safe safe locker"></div></a></div></div><div class="product-group"><h3 class="product-group-title">Medium Safe</h3><div class="product-grid"><a class="product-card" data-filter="medium-safe" href="product_pages/medium/MSMT1/MSMT1.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/medium/MSMT1/image1.png" alt="MSMT1 Medium Safe safe locker"></div></a><a class="product-card" data-filter="medium-safe" href="product_pages/medium/MSMT2/MSMT2.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/medium/MSMT2/image1.png" alt="MSMT2 Medium Safe safe locker"></div></a><a class="product-card" data-filter="medium-safe" href="product_pages/medium/MSMT3/MSMT3.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/medium/MSMT3/image1.png" alt="MSMT3 Medium Safe safe locker"></div></a><a class="product-card" data-filter="medium-safe" href="product_pages/medium/MSMT4/MSMT4.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/medium/MSMT4/Image1.png" alt="MSMT4 Medium Safe safe locker"></div></a></div></div><div class="product-group"><h3 class="product-group-title">Small Safe</h3><div class="product-grid"><a class="product-card" data-filter="small-safe" href="product_pages/small/SSMT1/SSMT1.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/small/SSMT1/image1.jpg" alt="SSMT1 Small Safe safe locker"></div></a><a class="product-card" data-filter="small-safe" href="product_pages/small/SSMT2/SSMT2.html"><div class="product-image-wrap"><img class="product-image" src="image/product_Image/small/SSMT2/image1.jpg" alt="SSMT2 Small Safe safe locker"></div></a></div></div></section>
     <section class="trust-section" aria-labelledby="trust-title">
       <h2 class="section-title" id="trust-title">Why Choose EAGLE SAFE</h2>
       <p class="section-subtitle">Reliable protection for valuables, business use and custom locker needs.</p>
       <div class="trust-grid">
-        <article class="trust-card"><h3>Strong Body</h3><p>Built for daily use with a solid, fire-resistant locker structure for homes, shops and offices.</p></article>
-        <article class="trust-card"><h3>Multiple Lock Options</h3><p>Choose key, flower, combination and auto lock options according to the model.</p></article>
-        <article class="trust-card"><h3>Custom Order Available</h3><p>Share your requirement and we can discuss custom safe locker needs.</p></article>
-        <article class="trust-card"><h3>All India Enquiry Support</h3><p>Customers can submit enquiries from any valid Indian PIN code.</p></article>
+        <article class="trust-card">
+          <h3>Strong Body</h3>
+          <p>Built for daily use with a solid, fire-resistant locker structure for homes, shops and offices.</p>
+        </article>
+        <article class="trust-card">
+          <h3>Multiple Lock Options</h3>
+          <p>Choose key, flower, combination and auto lock options according to the model.</p>
+        </article>
+        <article class="trust-card">
+          <h3>Custom Order Available</h3>
+          <p>Share your requirement and we can discuss custom safe locker needs.</p>
+        </article>
+        <article class="trust-card">
+          <h3>All India Enquiry Support</h3>
+          <p>Customers can submit enquiries from any valid Indian PIN code.</p>
+        </article>
       </div>
     </section>
-    <section class="enquiry-section">
+
+    <!-- Customer enquiry form connected to the Google Sheet web app. -->
+    <section class="enquiry-section" id="enquiry">
       <h2 class="enquiry-title">For Custom Order or Product Enquiry Fill up the Form Please</h2>
-      <form class="enquiry-form" id="enquiryForm"><div class="form-row"><div class="form-field"><label for="customer-name">Name</label><input id="customer-name" name="name" type="text"></div><div class="form-field"><label for="customer-phone">Contact No:</label><input id="customer-phone" name="phone" type="tel"></div></div><div class="form-row"><div class="form-field"><label for="customer-zip">PIN Code:</label><input id="customer-zip" name="zip" type="text" inputmode="numeric" maxlength="6"></div><div class="form-field"><label for="customer-state">State:</label><input id="customer-state" name="state" type="text" readonly></div></div><p class="form-message" id="formMessage"></p><button class="submit-button" type="submit">Submit</button></form>
+      <form class="enquiry-form" id="enquiryForm">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="customer-name">Name</label>
+            <input id="customer-name" name="name" type="text" />
+          </div>
+          <div class="form-field">
+            <label for="customer-phone">Contact No:</label>
+            <input id="customer-phone" name="phone" type="tel" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="customer-zip">PIN Code:</label>
+            <input id="customer-zip" name="zip" type="text" inputmode="numeric" maxlength="6" />
+          </div>
+          <div class="form-field">
+            <label for="customer-state">State:</label>
+            <input id="customer-state" name="state" type="text" readonly />
+          </div>
+        </div>
+        <p class="form-message" id="formMessage"></p>
+        <button class="submit-button" type="submit">Submit</button>
+      </form>
     </section>
 
-    <section class="visit-section"><h2 class="visit-title">Contact Or Visit Us</h2><div class="visit-layout"><div class="dealer-panel"><p class="dealer-kicker">Our Authorized Dealer</p><h3 class="dealer-name">Vishwas Enterprise</h3><div class="dealer-block"><p class="dealer-label">Address:</p><p class="dealer-text">49/A Daihatta Road, Kalikatala, Khagra<br>Berhampore, Murshidabad<br>West Bengal 742103</p></div><div class="dealer-block"><p class="dealer-label">Contact No:</p><div class="phone-list"><a class="phone-link" href="tel:+919057077915">+91 9057077915</a><a class="phone-link" href="tel:+919829286637">+91 9829286637</a><a class="phone-link" href="tel:+919382865054">+91 9382865054</a></div></div><a class="location-link" href="https://maps.app.goo.gl/vHcmkoLdkL368jbp8" target="_blank" rel="noreferrer">Open Our Location in Google Maps</a></div><div class="map-panel"><h3>Google Map View</h3><a class="map-frame-link" href="https://maps.app.goo.gl/vHcmkoLdkL368jbp8" target="_blank" rel="noreferrer"><iframe class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=49%2FA%20Daihatta%20Road%20Kalikatala%20Khagra%20Berhampore%20742103&output=embed"></iframe></a></div></div></section>
+    <!-- Dealer address and map location -->
+    <section class="visit-section">
+      <h2 class="visit-title">Contact Or Visit Us</h2>
+      <div class="visit-layout">
+        <div class="dealer-panel">
+          <p class="dealer-kicker">Our Authorized Dealer</p>
+          <h3 class="dealer-name">Vishwas Enterprise</h3>
+          <div class="dealer-block">
+            <p class="dealer-label">Address:</p>
+            <p class="dealer-text">
+              49/A Daihatta Road, Kalikatala, Khagra<br />
+              Berhampore, Murshidabad<br />
+              West Bengal 742103
+            </p>
+          </div>
+          <div class="dealer-block">
+            <p class="dealer-label">Contact No:</p>
+            <div class="phone-list">
+              <a class="phone-link" href="tel:+919057077915">+91 9057077915</a>
+              <a class="phone-link" href="tel:+919829286637">+91 9829286637</a>
+              <a class="phone-link" href="tel:+919382865054">+91 9382865054</a>
+            </div>
+          </div>
+          <a class="location-link" href="https://maps.app.goo.gl/vHcmkoLdkL368jbp8" target="_blank" rel="noreferrer">
+            Open Our Location in Google Maps
+          </a>
+        </div>
+        <div class="map-panel">
+          <h3>Google Map View</h3>
+          <a class="map-frame-link" href="https://maps.app.goo.gl/vHcmkoLdkL368jbp8" target="_blank" rel="noreferrer">
+            <iframe
+              class="map-frame"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=49%2FA%20Daihatta%20Road%20Kalikatala%20Khagra%20Berhampore%20742103&output=embed"
+            ></iframe>
+          </a>
+        </div>
+      </div>
+    </section>
 
-    <section class="brochure-section"><a class="brochure-link" href="brochure/Eagle%20Safe%20Market%20Card.pdf" target="_blank" rel="noreferrer">Download Our Brochure</a></section>
-    <section class="social-section" aria-labelledby="social-title"><h2 class="social-title" id="social-title">Social Media</h2><div class="social-links"><a class="social-link" href="https://www.facebook.com/share/1831639QQw/" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on Facebook">Facebook</a><a class="social-link" href="https://www.instagram.com/eaglesafesecurity?igsh=MW8zaDZ6b2tmbndteA==" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on Instagram">Instagram</a><a class="social-link" href="https://youtube.com/@eaglesafesecurity?si=yYZytCasZuPDr8JM" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on YouTube">YouTube</a><a class="social-link" href="https://wa.me/919057077915" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on WhatsApp">WhatsApp</a></div></section>
-    <footer class="site-footer">This website was designed, created and is maintained by <a href="https://www.google.com/search?q=Tim+W41k3r" target="_blank" rel="noreferrer">Tim W41k3r</a>.</footer>
+    <section class="brochure-section">
+      <a class="brochure-link" href="brochure/Eagle%20Safe%20Market%20Card.pdf" target="_blank" rel="noreferrer">
+        Download Our Brochure
+      </a>
+    </section>
+
+    <section class="social-section" aria-labelledby="social-title">
+      <h2 class="social-title" id="social-title">Social Media</h2>
+      <div class="social-links">
+        <a class="social-link" href="https://www.facebook.com/share/1831639QQw/" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on Facebook">Facebook</a>
+        <a class="social-link" href="https://www.instagram.com/eaglesafesecurity?igsh=MW8zaDZ6b2tmbndteA==" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on Instagram">Instagram</a>
+        <a class="social-link" href="https://youtube.com/@eaglesafesecurity?si=yYZytCasZuPDr8JM" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on YouTube">YouTube</a>
+        <a class="social-link" href="https://wa.me/919057077915" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on WhatsApp">WhatsApp</a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      This website was designed, created and is maintained by
+      <a href="https://www.google.com/search?q=Tim+W41k3r" target="_blank" rel="noreferrer">Tim W41k3r</a>.
+    </footer>
+
     <button class="theme-toggle" type="button" aria-label="Toggle day or night theme">Night Mode</button>
+
+    <div class="ar-modal" id="arDesktopModal" hidden>
+      <div class="ar-modal-card" role="dialog" aria-modal="true" aria-labelledby="ar-modal-title">
+        <h2 id="ar-modal-title">Use AR Measurement on Mobile</h2>
+        <p>Scan this QR code with your phone to open the AR measurement demo.</p>
+        <img class="ar-qr" id="arQrImage" alt="QR code for EAGLE SAFE AR measurement" />
+        <a class="ar-mobile-link" id="arDirectLink" href="ar-measure.html">Open AR Page</a>
+        <button class="ar-modal-close" type="button" id="arModalClose">Close</button>
+      </div>
+    </div>
 
     <script src="product_catalog.js"></script>
     <script>
+      // Day/night theme preference shared across all pages.
       const themeToggle = document.querySelector(".theme-toggle");
       const savedTheme = localStorage.getItem("eagleSafeTheme");
       if (savedTheme === "night") document.body.classList.add("night-theme");
-      function updateThemeButton() { themeToggle.textContent = document.body.classList.contains("night-theme") ? "Day Mode" : "Night Mode"; }
-      themeToggle?.addEventListener("click", () => { document.body.classList.toggle("night-theme"); localStorage.setItem("eagleSafeTheme", document.body.classList.contains("night-theme") ? "night" : "day"); updateThemeButton(); });
+
+      function updateThemeButton() {
+        themeToggle.textContent = document.body.classList.contains("night-theme") ? "Day Mode" : "Night Mode";
+      }
+
+      themeToggle?.addEventListener("click", () => {
+        document.body.classList.toggle("night-theme");
+        localStorage.setItem("eagleSafeTheme", document.body.classList.contains("night-theme") ? "night" : "day");
+        updateThemeButton();
+      });
+
       updateThemeButton();
-      const slidingAdImages = ["image/sliding_image/image1.jpg", "image/sliding_image/image2.jpg", "image/sliding_image/image3.jpg", "image/sliding_image/image4.jpg", "image/sliding_image/image5.jpg"];
+
+      // Homepage advertisement slider.
+      const slidingAdImages = [
+        "image/sliding_image/image1.jpg",
+        "image/sliding_image/image2.jpg",
+        "image/sliding_image/image3.jpg",
+        "image/sliding_image/image4.jpg",
+        "image/sliding_image/image5.jpg",
+      ];
       let startSlide = 0;
       let movement = null;
       let autoTimer = null;
       const sliderTrack = document.getElementById("sliderTrack");
       const sliderDots = document.getElementById("sliderDots");
-      function loopIndex(index) { return (index + slidingAdImages.length) % slidingAdImages.length; }
-      function getSliderSize() { const small = window.innerWidth <= 640; return { slideWidth: small ? window.innerWidth * 0.82 : Math.min(window.innerWidth * 0.72, 920), gap: small ? 12 : 22, viewportWidth: window.innerWidth }; }
-      function renderDots() { const centerSlide = loopIndex(startSlide + 1); sliderDots.innerHTML = ""; slidingAdImages.forEach((image, index) => { const dot = document.createElement("button"); dot.className = "slider-dot" + (centerSlide === index ? " active" : ""); dot.type = "button"; dot.setAttribute("aria-label", "Show ad " + (index + 1)); dot.addEventListener("click", () => { if (movement) return; startSlide = loopIndex(index - 1); renderSlider(); restartAutoSlider(); }); sliderDots.appendChild(dot); }); }
-      function renderSlider(phase) { if (!sliderTrack) return; const size = getSliderSize(); const firstPosition = movement === "previous" ? -1 : 0; let centerPosition = 1; if (phase === "moving" && movement === "next") centerPosition = 2; if (phase === "moving" && movement === "previous") centerPosition = 0; const slideAmount = size.slideWidth + size.gap; const trackOffset = size.viewportWidth / 2 - (centerPosition - firstPosition) * slideAmount - size.slideWidth / 2; sliderTrack.style.transform = "translateX(" + trackOffset + "px)"; sliderTrack.style.transition = phase === "moving" ? "transform 560ms ease" : "none"; sliderTrack.innerHTML = ""; for (let position = 0; position < (movement ? 4 : 3); position += 1) { const relative = firstPosition + position; const index = loopIndex(startSlide + relative); const slide = document.createElement("div"); slide.className = "slide" + (relative === centerPosition ? " active" : ""); slide.innerHTML = '<img src="' + slidingAdImages[index] + '" alt="EAGLE SAFE ad ' + (index + 1) + '">'; sliderTrack.appendChild(slide); } renderDots(); }
-      function moveSlider(direction) { if (movement) return; movement = direction; renderSlider("ready"); requestAnimationFrame(() => renderSlider("moving")); window.setTimeout(() => { startSlide = direction === "next" ? loopIndex(startSlide + 1) : loopIndex(startSlide - 1); movement = null; renderSlider(); }, 580); }
-      function restartAutoSlider() { window.clearInterval(autoTimer); autoTimer = window.setInterval(() => moveSlider("next"), 4000); }
-      document.querySelector(".slider-button.previous")?.addEventListener("click", () => { moveSlider("previous"); restartAutoSlider(); }); document.querySelector(".slider-button.next")?.addEventListener("click", () => { moveSlider("next"); restartAutoSlider(); }); window.addEventListener("resize", () => renderSlider()); renderSlider(); restartAutoSlider();
-      document.querySelectorAll("[data-page]").forEach((button) => button.addEventListener("click", () => { window.location.href = button.dataset.page; })); document.querySelectorAll("[data-scroll]").forEach((button) => button.addEventListener("click", () => { document.querySelector("." + button.dataset.scroll)?.scrollIntoView({ behavior: "smooth", block: "start" }); document.querySelector(".quick-nav-dropdown")?.setAttribute("hidden", ""); })); document.querySelector(".quick-nav-menu")?.addEventListener("click", () => { document.querySelector(".quick-nav-dropdown")?.toggleAttribute("hidden"); });
-      const pinStates=[{n:"Delhi",r:[[110,110]]},{n:"Haryana",r:[[121,136]]},{n:"Punjab",r:[[140,160]]},{n:"Chandigarh",r:[[160,160]]},{n:"Himachal Pradesh",r:[[171,177]]},{n:"Jammu and Kashmir / Ladakh",r:[[180,194]]},{n:"Uttar Pradesh",r:[[201,285]]},{n:"Uttarakhand",r:[[244,263]]},{n:"Rajasthan",r:[[301,345]]},{n:"Gujarat",r:[[360,396]]},{n:"Maharashtra",r:[[400,445]]},{n:"Madhya Pradesh",r:[[450,488]]},{n:"Chhattisgarh",r:[[490,497]]},{n:"Telangana",r:[[500,509]]},{n:"Andhra Pradesh",r:[[515,535]]},{n:"Karnataka",r:[[560,591]]},{n:"Tamil Nadu",r:[[600,643]]},{n:"Kerala",r:[[670,695]]},{n:"West Bengal",r:[[700,743]]},{n:"Odisha",r:[[751,770]]},{n:"Assam",r:[[781,788]]},{n:"North East India",r:[[790,799]]},{n:"Bihar",r:[[800,855]]},{n:"Jharkhand",r:[[813,835]]}]; function getStateFromZip(zipCode) { if (!/^\d{6}$/.test(zipCode)) return ""; const prefix = Number(zipCode.slice(0, 3)); const state = pinStates.find((item) => item.r.some(([start, end]) => prefix >= start && prefix <= end)); return state ? state.n : "India"; }
-      const zipInput = document.getElementById("customer-zip"); const stateInput = document.getElementById("customer-state"); const message = document.getElementById("formMessage"); zipInput?.addEventListener("input", () => { zipInput.value = zipInput.value.replace(/\D/g, "").slice(0, 6); stateInput.value = getStateFromZip(zipInput.value); message.textContent = ""; message.className = "form-message"; });
-      document.getElementById("enquiryForm")?.addEventListener("submit", async (event) => { event.preventDefault(); const name = document.getElementById("customer-name").value.trim(); const phone = document.getElementById("customer-phone").value.trim(); const zip = zipInput.value.trim(); const state = getStateFromZip(zip); message.className = "form-message"; if (!name || !phone || !zip) { message.textContent = "Please fill up all fields before submitting."; message.classList.add("error"); return; } if (!/^\d{6}$/.test(zip)) { message.textContent = "Please enter a valid 6 digit ZIP code."; message.classList.add("error"); return; }  if (!window.eagleSafeGoogleSheetWebAppUrl) { message.textContent = "Google Sheet connection is not ready yet."; message.classList.add("error"); return; } try { await fetch(window.eagleSafeGoogleSheetWebAppUrl, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify({ name, phone, zip, state }) }); event.target.reset(); stateInput.value = ""; message.textContent = "Your enquiry has been submitted."; message.classList.add("success"); } catch (error) { message.textContent = "Could not save the enquiry right now."; message.classList.add("error"); } });
+
+      function loopIndex(index) {
+        return (index + slidingAdImages.length) % slidingAdImages.length;
+      }
+
+      function getSliderSize() {
+        const small = window.innerWidth <= 640;
+        return {
+          slideWidth: small ? window.innerWidth * 0.82 : Math.min(window.innerWidth * 0.72, 920),
+          gap: small ? 12 : 22,
+          viewportWidth: window.innerWidth,
+        };
+      }
+
+      function renderDots() {
+        const centerSlide = loopIndex(startSlide + 1);
+        sliderDots.innerHTML = "";
+        slidingAdImages.forEach((image, index) => {
+          const dot = document.createElement("button");
+          dot.className = "slider-dot" + (centerSlide === index ? " active" : "");
+          dot.type = "button";
+          dot.setAttribute("aria-label", "Show ad " + (index + 1));
+          dot.addEventListener("click", () => {
+            if (movement) return;
+            startSlide = loopIndex(index - 1);
+            renderSlider();
+            restartAutoSlider();
+          });
+          sliderDots.appendChild(dot);
+        });
+      }
+
+      function renderSlider(phase) {
+        if (!sliderTrack) return;
+        const size = getSliderSize();
+        const firstPosition = movement === "previous" ? -1 : 0;
+        let centerPosition = 1;
+
+        if (phase === "moving" && movement === "next") centerPosition = 2;
+        if (phase === "moving" && movement === "previous") centerPosition = 0;
+
+        const slideAmount = size.slideWidth + size.gap;
+        const trackOffset = size.viewportWidth / 2 - (centerPosition - firstPosition) * slideAmount - size.slideWidth / 2;
+
+        sliderTrack.style.transform = "translateX(" + trackOffset + "px)";
+        sliderTrack.style.transition = phase === "moving" ? "transform 560ms ease" : "none";
+        sliderTrack.innerHTML = "";
+
+        for (let position = 0; position < (movement ? 4 : 3); position += 1) {
+          const relative = firstPosition + position;
+          const index = loopIndex(startSlide + relative);
+          const slide = document.createElement("div");
+          slide.className = "slide" + (relative === centerPosition ? " active" : "");
+          slide.innerHTML = '<img src="' + slidingAdImages[index] + '" alt="EAGLE SAFE ad ' + (index + 1) + '">';
+          sliderTrack.appendChild(slide);
+        }
+
+        renderDots();
+      }
+
+      function moveSlider(direction) {
+        if (movement) return;
+        movement = direction;
+        renderSlider("ready");
+        requestAnimationFrame(() => renderSlider("moving"));
+        window.setTimeout(() => {
+          startSlide = direction === "next" ? loopIndex(startSlide + 1) : loopIndex(startSlide - 1);
+          movement = null;
+          renderSlider();
+        }, 580);
+      }
+
+      function restartAutoSlider() {
+        window.clearInterval(autoTimer);
+        autoTimer = window.setInterval(() => moveSlider("next"), 4000);
+      }
+
+      document.querySelector(".slider-button.previous")?.addEventListener("click", () => {
+        moveSlider("previous");
+        restartAutoSlider();
+      });
+
+      document.querySelector(".slider-button.next")?.addEventListener("click", () => {
+        moveSlider("next");
+        restartAutoSlider();
+      });
+
+      window.addEventListener("resize", () => renderSlider());
+      renderSlider();
+      restartAutoSlider();
+
+      // Top navigation buttons and mobile dropdown.
+      document.querySelectorAll("[data-page]").forEach((button) => {
+        button.addEventListener("click", () => {
+          window.location.href = button.dataset.page;
+        });
+      });
+
+      document.querySelectorAll("[data-scroll]").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelector("." + button.dataset.scroll)?.scrollIntoView({ behavior: "smooth", block: "start" });
+          document.querySelector(".quick-nav-dropdown")?.setAttribute("hidden", "");
+        });
+      });
+
+      document.querySelector(".quick-nav-menu")?.addEventListener("click", () => {
+        document.querySelector(".quick-nav-dropdown")?.toggleAttribute("hidden");
+      });
+
+      // AR measurement entry. Desktop shows QR; mobile opens the AR demo page directly.
+      const arUrl = new URL("ar-measure.html", window.location.href).href;
+      const arModal = document.getElementById("arDesktopModal");
+      const arQrImage = document.getElementById("arQrImage");
+      const arDirectLink = document.getElementById("arDirectLink");
+
+      arDirectLink.href = arUrl;
+      arQrImage.src = "https://quickchart.io/qr?size=260&text=" + encodeURIComponent(arUrl);
+
+      document.querySelectorAll("[data-ar-measure]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const mobileLike = window.matchMedia("(max-width: 760px), (pointer: coarse)").matches;
+          if (mobileLike) {
+            window.location.href = arUrl;
+          } else {
+            arModal.hidden = false;
+          }
+          document.querySelector(".quick-nav-dropdown")?.setAttribute("hidden", "");
+        });
+      });
+
+      document.getElementById("arModalClose")?.addEventListener("click", () => {
+        arModal.hidden = true;
+      });
+
+      // Indian PIN-code helper used by the enquiry form.
+      const pinStates = [
+        { n: "Delhi", r: [[110, 110]] },
+        { n: "Haryana", r: [[121, 136]] },
+        { n: "Punjab", r: [[140, 160]] },
+        { n: "Chandigarh", r: [[160, 160]] },
+        { n: "Himachal Pradesh", r: [[171, 177]] },
+        { n: "Jammu and Kashmir / Ladakh", r: [[180, 194]] },
+        { n: "Uttar Pradesh", r: [[201, 285]] },
+        { n: "Uttarakhand", r: [[244, 263]] },
+        { n: "Rajasthan", r: [[301, 345]] },
+        { n: "Gujarat", r: [[360, 396]] },
+        { n: "Maharashtra", r: [[400, 445]] },
+        { n: "Madhya Pradesh", r: [[450, 488]] },
+        { n: "Chhattisgarh", r: [[490, 497]] },
+        { n: "Telangana", r: [[500, 509]] },
+        { n: "Andhra Pradesh", r: [[515, 535]] },
+        { n: "Karnataka", r: [[560, 591]] },
+        { n: "Tamil Nadu", r: [[600, 643]] },
+        { n: "Kerala", r: [[670, 695]] },
+        { n: "West Bengal", r: [[700, 743]] },
+        { n: "Odisha", r: [[751, 770]] },
+        { n: "Assam", r: [[781, 788]] },
+        { n: "North East India", r: [[790, 799]] },
+        { n: "Bihar", r: [[800, 855]] },
+        { n: "Jharkhand", r: [[813, 835]] },
+      ];
+
+      function getStateFromZip(zipCode) {
+        if (!/^\d{6}$/.test(zipCode)) return "";
+        const prefix = Number(zipCode.slice(0, 3));
+        const state = pinStates.find((item) => item.r.some(([start, end]) => prefix >= start && prefix <= end));
+        return state ? state.n : "India";
+      }
+
+      const zipInput = document.getElementById("customer-zip");
+      const stateInput = document.getElementById("customer-state");
+      const message = document.getElementById("formMessage");
+
+      zipInput?.addEventListener("input", () => {
+        zipInput.value = zipInput.value.replace(/\D/g, "").slice(0, 6);
+        stateInput.value = getStateFromZip(zipInput.value);
+        message.textContent = "";
+        message.className = "form-message";
+      });
+
+      // Submit enquiries to the Google Sheet web app URL from google-sheet-config.js.
+      document.getElementById("enquiryForm")?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const name = document.getElementById("customer-name").value.trim();
+        const phone = document.getElementById("customer-phone").value.trim();
+        const zip = zipInput.value.trim();
+        const state = getStateFromZip(zip);
+
+        message.className = "form-message";
+
+        if (!name || !phone || !zip) {
+          message.textContent = "Please fill up all fields before submitting.";
+          message.classList.add("error");
+          return;
+        }
+
+        if (!/^\d{6}$/.test(zip)) {
+          message.textContent = "Please enter a valid 6 digit ZIP code.";
+          message.classList.add("error");
+          return;
+        }
+
+        if (!window.eagleSafeGoogleSheetWebAppUrl) {
+          message.textContent = "Google Sheet connection is not ready yet.";
+          message.classList.add("error");
+          return;
+        }
+
+        try {
+          await fetch(window.eagleSafeGoogleSheetWebAppUrl, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain" },
+            body: JSON.stringify({ name, phone, zip, state }),
+          });
+          event.target.reset();
+          stateInput.value = "";
+          message.textContent = "Your enquiry has been submitted.";
+          message.classList.add("success");
+        } catch (error) {
+          message.textContent = "Could not save the enquiry right now.";
+          message.classList.add("error");
+        }
+      });
+
       document.querySelectorAll(".product-image").forEach((image) => image.addEventListener("error", () => { image.style.display = "none"; image.parentElement.classList.add("image-missing"); }));
 
+      // Product category bands on the homepage.
       const productSection = document.querySelector(".product-types");
       const productCategories = [
-        ["double-door", "Double Door"], ["large-safe", "Large Safe"], ["medium-safe", "Medium Safe"],
-        ["small-safe", "Small Safe"], ["counter-locker", "Counter Locker"], ["triple-door", "Triple Door"],
-        ["strong-room-door", "Strong Room Door"]
+        ["double-door", "Double Door"],
+        ["large-safe", "Large Safe"],
+        ["medium-safe", "Medium Safe"],
+        ["small-safe", "Small Safe"],
+        ["counter-locker", "Counter Locker"],
+        ["triple-door", "Triple Door"],
+        ["strong-room-door", "Strong Room Door"],
       ];
+
       const categoryNotes = {
         "double-door": "Heavy double door lockers for jewellery stores, cash rooms and serious business storage.",
         "large-safe": "Tall high-capacity safes for shops, offices and secure document storage.",
@@ -1203,14 +1636,47 @@
         "triple-door": "Large triple door security lockers for high-volume safe storage.",
         "strong-room-door": "Strong room doors for dedicated vault rooms, gold storage and commercial security."
       };
-      function cardMarkup(product) { return '<a class="product-card" href="' + product.page + '"><div class="product-image-wrap"><img class="product-image" src="' + product.image + '" alt="' + product.model + ' ' + product.categoryName + ' safe locker"></div><p class="product-card-label">' + product.model + '</p></a>'; }
+
+      function cardMarkup(product) {
+        return (
+          '<a class="product-card" href="' + product.page + '">' +
+          '<div class="product-image-wrap">' +
+          '<img class="product-image" src="' + product.image + '" alt="' + product.model + ' ' + product.categoryName + ' safe locker">' +
+          "</div>" +
+          '<p class="product-card-label">' + product.model + "</p>" +
+          "</a>"
+        );
+      }
+
       function renderHomeProducts() {
         if (!productSection || !window.eagleSafeProducts) return;
         const bands = productCategories.map(([key, name]) => {
           const products = window.eagleSafeProducts.filter((product) => product.category === key);
-          return '<div class="product-band" data-category="' + key + '"><div class="product-feature"><p class="product-band-kicker">EAGLE SAFE Collection</p><h3>' + name + '</h3><p>' + (categoryNotes[key] || 'Explore EAGLE SAFE products for reliable security.') + '</p><p class="product-band-count">' + products.length + ' models available</p><a class="view-category-link" href="product.html?category=' + key + '">View All ' + name + '</a></div><div class="product-carousel"><div class="product-carousel-head"><button class="product-arrow product-left" type="button" aria-label="Previous ' + name + ' products">&lt;</button><button class="product-arrow product-right" type="button" aria-label="Next ' + name + ' products">&gt;</button></div><div class="product-grid">' + products.map(cardMarkup).join("") + '</div></div></div>';
+          return (
+            '<div class="product-band" data-category="' + key + '">' +
+            '<div class="product-feature">' +
+            '<p class="product-band-kicker">EAGLE SAFE Collection</p>' +
+            "<h3>" + name + "</h3>" +
+            "<p>" + (categoryNotes[key] || "Explore EAGLE SAFE products for reliable security.") + "</p>" +
+            '<p class="product-band-count">' + products.length + " models available</p>" +
+            '<a class="view-category-link" href="product.html?category=' + key + '">View All ' + name + "</a>" +
+            "</div>" +
+            '<div class="product-carousel">' +
+            '<div class="product-carousel-head">' +
+            '<button class="product-arrow product-left" type="button" aria-label="Previous ' + name + ' products">&lt;</button>' +
+            '<button class="product-arrow product-right" type="button" aria-label="Next ' + name + ' products">&gt;</button>' +
+            "</div>" +
+            '<div class="product-grid">' + products.map(cardMarkup).join("") + "</div>" +
+            "</div>" +
+            "</div>"
+          );
         }).join("");
-        productSection.innerHTML = '<h2 class="section-title">Our Product Types</h2><p class="section-subtitle">Explore every EAGLE SAFE collection in a showroom style layout</p><div class="product-showcase">' + bands + '</div>';
+
+        productSection.innerHTML =
+          '<h2 class="section-title">Our Product Types</h2>' +
+          '<p class="section-subtitle">Explore every EAGLE SAFE collection in a showroom style layout</p>' +
+          '<div class="product-showcase">' + bands + "</div>";
+
         productSection.querySelectorAll(".product-band").forEach((band) => {
           const grid = band.querySelector(".product-grid");
           band.querySelector(".product-left")?.addEventListener("click", () => grid.scrollBy({ left: -520, behavior: "smooth" }));
@@ -1218,7 +1684,8 @@
         });
         productSection.querySelectorAll(".product-image").forEach((image) => image.addEventListener("error", () => { image.style.display = "none"; image.parentElement.classList.add("image-missing"); }));
       }
-      renderHomeProducts();    
+
+      renderHomeProducts();
     </script>
   </body>
 </html>

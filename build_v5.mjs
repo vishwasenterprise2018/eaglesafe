@@ -200,7 +200,36 @@ function productHtml(product) {
     images: pageImages,
     spec: product.spec,
   };
-  return `<!doctype html><html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>${product.model} | EAGLE SAFE</title><meta name="description" content="${product.model} ${product.categoryName} safe locker by EAGLE SAFE." /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" /><link rel="stylesheet" href="../../model_page.css" /></head><body><div id="root"></div><script src="../../../product_catalog.js"><\/script><script>window.productModel = ${JSON.stringify(data)};<\/script><script src="../../model_page.js"><\/script></body></html>\n`;
+  const productData = JSON.stringify(data, null, 2)
+    .split("\n")
+    .map((line, index) => (index === 0 ? line : "      " + line))
+    .join("\n");
+
+  // Product pages are static HTML files. Keep this template readable so it is easy to adjust from GitHub.
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${product.model} | EAGLE SAFE</title>
+    <meta name="description" content="${product.model} ${product.categoryName} safe locker by EAGLE SAFE." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../model_page.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Product data for this model. The shared renderer below builds the gallery and specification tables. -->
+    <script src="../../../product_catalog.js"><\/script>
+    <script>
+      window.productModel = ${productData};
+    <\/script>
+    <script src="../../model_page.js"><\/script>
+  </body>
+</html>
+`;
 }
 
 for (const product of products) {

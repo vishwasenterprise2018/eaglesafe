@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AR Measurement Demo | EAGLE SAFE</title>
+    <meta
+      name="description"
+      content="EAGLE SAFE AR measurement demo for checking approximate height and width before choosing a safe locker."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        --page-bg: #f6f7f9;
+        --panel-bg: #ffffff;
+        --text-main: #14171f;
+        --text-muted: #4f5b6d;
+        --soft-panel: #f0f3f8;
+        --border: #e2e6ee;
+        --button-bg: #14171f;
+        --button-text: #ffffff;
+        --shadow: rgba(20, 23, 31, 0.1);
+        margin: 0;
+        min-height: 100vh;
+        font-family: "DM Sans", Arial, sans-serif;
+        background: var(--page-bg);
+        color: var(--text-main);
+      }
+
+      body.night-theme {
+        --page-bg: #091527;
+        --panel-bg: #10223a;
+        --text-main: #f4f8ff;
+        --text-muted: #b9c7dd;
+        --soft-panel: #162b49;
+        --border: #294365;
+        --button-bg: #d6e7ff;
+        --button-text: #081426;
+        --shadow: rgba(0, 0, 0, 0.24);
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 22px 20px;
+        background: var(--panel-bg);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .brand-link,
+      .home-link {
+        color: var(--text-main);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .brand-link {
+        font-size: 24px;
+      }
+
+      .home-link {
+        font-size: 14px;
+      }
+
+      .screen {
+        width: min(960px, calc(100% - 28px));
+        margin: 36px auto;
+      }
+
+      .panel {
+        padding: 28px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--panel-bg);
+        box-shadow: 0 14px 34px var(--shadow);
+      }
+
+      .title {
+        margin: 0 0 12px;
+        font-size: clamp(30px, 6vw, 50px);
+        line-height: 1.05;
+        font-weight: 800;
+      }
+
+      .text {
+        margin: 0 0 22px;
+        color: var(--text-muted);
+        font-size: 16px;
+        line-height: 1.65;
+        font-weight: 600;
+      }
+
+      .action-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .button {
+        display: inline-grid;
+        place-items: center;
+        min-height: 46px;
+        padding: 0 18px;
+        border: 1px solid var(--button-bg);
+        border-radius: 6px;
+        background: var(--button-bg);
+        color: var(--button-text);
+        font: inherit;
+        font-weight: 800;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .button.secondary {
+        background: transparent;
+        color: var(--text-main);
+      }
+
+      .countdown {
+        display: inline-grid;
+        place-items: center;
+        width: 58px;
+        height: 58px;
+        margin: 6px 0 18px;
+        border-radius: 50%;
+        background: var(--button-bg);
+        color: var(--button-text);
+        font-size: 26px;
+        font-weight: 800;
+      }
+
+      .camera-stage {
+        position: relative;
+        min-height: 76vh;
+        overflow: hidden;
+        border-radius: 8px;
+        background: #050c18;
+      }
+
+      .camera-video,
+      .measure-layer {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .camera-video {
+        object-fit: cover;
+      }
+
+      .measure-layer {
+        z-index: 2;
+        touch-action: none;
+      }
+
+      .measure-hud {
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        z-index: 3;
+        display: grid;
+        gap: 10px;
+        padding: 14px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.92);
+        color: #14171f;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+      }
+
+      .measure-hud p {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .hint {
+        color: #4f5b6d;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .dot {
+        fill: #16a34a;
+        stroke: #ffffff;
+        stroke-width: 4;
+      }
+
+      .shape-line {
+        fill: rgba(22, 163, 74, 0.18);
+        stroke: #16a34a;
+        stroke-width: 4;
+      }
+
+      .results-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin: 24px 0;
+      }
+
+      .result-card {
+        padding: 18px;
+        border-radius: 8px;
+        background: var(--soft-panel);
+      }
+
+      .result-label {
+        margin: 0 0 6px;
+        color: var(--text-muted);
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .result-value {
+        margin: 0;
+        font-size: 30px;
+        font-weight: 800;
+      }
+
+      .suggestion-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .suggestion-card {
+        display: block;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--panel-bg);
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .suggestion-image-wrap {
+        display: grid;
+        place-items: center;
+        aspect-ratio: 1 / 1;
+        padding: 12px;
+        background: var(--soft-panel);
+      }
+
+      .suggestion-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+
+      .suggestion-info {
+        padding: 12px;
+      }
+
+      .suggestion-info h3,
+      .suggestion-info p {
+        margin: 0;
+      }
+
+      .suggestion-info p {
+        margin-top: 4px;
+        color: var(--text-muted);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .theme-toggle {
+        position: fixed;
+        right: 14px;
+        bottom: 14px;
+        z-index: 20;
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: var(--panel-bg);
+        color: var(--text-main);
+        font: inherit;
+        font-size: 13px;
+        font-weight: 800;
+        box-shadow: 0 14px 34px var(--shadow);
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      @media (max-width: 620px) {
+        .page-header {
+          padding: 18px 14px;
+        }
+
+        .screen {
+          width: calc(100% - 22px);
+          margin: 22px auto;
+        }
+
+        .panel {
+          padding: 22px;
+        }
+
+        .results-grid,
+        .suggestion-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="page-header">
+      <a class="brand-link" href="index.html">EAGLE SAFE</a>
+      <a class="home-link" href="index.html">Back Home</a>
+    </header>
+
+    <main>
+      <section class="screen" id="introScreen">
+        <div class="panel">
+          <h1 class="title">AR Measurement Demo</h1>
+          <p class="text">
+            Use your mobile camera to mark the four corners of the available locker space. This demo gives an approximate
+            height and width, then suggests matching EAGLE SAFE models.
+          </p>
+          <p class="text">
+            Measurement is only approximate. Please confirm final size before ordering.
+          </p>
+          <div class="action-row">
+            <button class="button" id="startButton" type="button">Check AR Support</button>
+            <a class="button secondary" href="index.html">Back Home</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="unsupportedScreen" hidden>
+        <div class="panel">
+          <h1 class="title">Device Not Supported</h1>
+          <p class="text">
+            AR Measurement is not supported on this device or browser. Please try Chrome on a supported Android mobile.
+          </p>
+          <div class="countdown" id="countdown">7</div>
+          <p class="text">You will be redirected to the home page automatically.</p>
+          <a class="button" href="index.html">Back to Home Now</a>
+        </div>
+      </section>
+
+      <section class="screen" id="measureScreen" hidden>
+        <div class="camera-stage">
+          <video class="camera-video" id="cameraVideo" autoplay playsinline muted></video>
+          <svg class="measure-layer" id="measureLayer"></svg>
+          <div class="measure-hud">
+            <p id="stepText">Tap the top-left corner of the space.</p>
+            <span class="hint">Tap 4 corners: top-left, top-right, bottom-right, bottom-left.</span>
+            <div class="action-row">
+              <button class="button" id="resetButton" type="button">Reset</button>
+              <button class="button secondary" id="finishButton" type="button" disabled>Finish</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="resultScreen" hidden>
+        <div class="panel">
+          <h1 class="title">Approx Measurement</h1>
+          <p class="text">These values are estimated from the selected camera view area.</p>
+          <div class="results-grid">
+            <div class="result-card">
+              <p class="result-label">Height</p>
+              <p class="result-value" id="heightResult">0 ft</p>
+            </div>
+            <div class="result-card">
+              <p class="result-label">Width</p>
+              <p class="result-value" id="widthResult">0 ft</p>
+            </div>
+          </div>
+          <div class="action-row">
+            <button class="button secondary" id="measureAgainButton" type="button">Measure Again</button>
+            <a class="button" href="index.html#enquiry">Custom Locker Enquiry</a>
+          </div>
+          <h2>Suggested Lockers</h2>
+          <div class="suggestion-grid" id="suggestionGrid"></div>
+        </div>
+      </section>
+    </main>
+
+    <button class="theme-toggle" type="button" aria-label="Toggle day or night theme">Night Mode</button>
+
+    <script src="product_catalog.js"></script>
+    <script>
+      // Theme preference shared with the main website.
+      const themeToggle = document.querySelector(".theme-toggle");
+      const savedTheme = localStorage.getItem("eagleSafeTheme");
+      if (savedTheme === "night") document.body.classList.add("night-theme");
+
+      function updateThemeButton() {
+        themeToggle.textContent = document.body.classList.contains("night-theme") ? "Day Mode" : "Night Mode";
+      }
+
+      themeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("night-theme");
+        localStorage.setItem("eagleSafeTheme", document.body.classList.contains("night-theme") ? "night" : "day");
+        updateThemeButton();
+      });
+
+      updateThemeButton();
+
+      const introScreen = document.getElementById("introScreen");
+      const unsupportedScreen = document.getElementById("unsupportedScreen");
+      const measureScreen = document.getElementById("measureScreen");
+      const resultScreen = document.getElementById("resultScreen");
+      const startButton = document.getElementById("startButton");
+      const resetButton = document.getElementById("resetButton");
+      const finishButton = document.getElementById("finishButton");
+      const measureAgainButton = document.getElementById("measureAgainButton");
+      const cameraVideo = document.getElementById("cameraVideo");
+      const measureLayer = document.getElementById("measureLayer");
+      const stepText = document.getElementById("stepText");
+      const steps = ["top-left", "top-right", "bottom-right", "bottom-left"];
+      let points = [];
+      let cameraStream = null;
+
+      function showScreen(screen) {
+        [introScreen, unsupportedScreen, measureScreen, resultScreen].forEach((item) => {
+          item.hidden = item !== screen;
+        });
+      }
+
+      function startUnsupportedCountdown() {
+        showScreen(unsupportedScreen);
+        let seconds = 7;
+        document.getElementById("countdown").textContent = seconds;
+        const timer = window.setInterval(() => {
+          seconds -= 1;
+          document.getElementById("countdown").textContent = seconds;
+          if (seconds <= 0) {
+            window.clearInterval(timer);
+            window.location.href = "index.html";
+          }
+        }, 1000);
+      }
+
+      async function isArSupported() {
+        const mobileLike = window.matchMedia("(max-width: 780px), (pointer: coarse)").matches;
+        if (!mobileLike || !navigator.xr || !navigator.xr.isSessionSupported) return false;
+        try {
+          return await navigator.xr.isSessionSupported("immersive-ar");
+        } catch (error) {
+          return false;
+        }
+      }
+
+      async function startCameraMeasure() {
+        try {
+          cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: { ideal: "environment" } },
+            audio: false,
+          });
+          cameraVideo.srcObject = cameraStream;
+          resetMeasurement();
+          showScreen(measureScreen);
+        } catch (error) {
+          startUnsupportedCountdown();
+        }
+      }
+
+      function resetMeasurement() {
+        points = [];
+        finishButton.disabled = true;
+        stepText.textContent = "Tap the top-left corner of the space.";
+        drawMeasurement();
+      }
+
+      function drawMeasurement() {
+        measureLayer.innerHTML = "";
+        const width = measureLayer.clientWidth;
+        const height = measureLayer.clientHeight;
+        measureLayer.setAttribute("viewBox", "0 0 " + width + " " + height);
+
+        if (points.length > 1) {
+          const polygonPoints = points.map((point) => point.x + "," + point.y).join(" ");
+          const shape = document.createElementNS("http://www.w3.org/2000/svg", points.length === 4 ? "polygon" : "polyline");
+          shape.setAttribute("points", polygonPoints);
+          shape.setAttribute("class", "shape-line");
+          measureLayer.appendChild(shape);
+        }
+
+        points.forEach((point) => {
+          const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          dot.setAttribute("cx", point.x);
+          dot.setAttribute("cy", point.y);
+          dot.setAttribute("r", "8");
+          dot.setAttribute("class", "dot");
+          measureLayer.appendChild(dot);
+        });
+      }
+
+      function addPoint(event) {
+        if (points.length >= 4) return;
+        const rect = measureLayer.getBoundingClientRect();
+        points.push({
+          x: event.clientX - rect.left,
+          y: event.clientY - rect.top,
+        });
+        drawMeasurement();
+
+        if (points.length < 4) {
+          stepText.textContent = "Tap the " + steps[points.length] + " corner of the space.";
+        } else {
+          stepText.textContent = "Corners selected. Tap Finish to see matching lockers.";
+          finishButton.disabled = false;
+        }
+      }
+
+      function stopCamera() {
+        if (!cameraStream) return;
+        cameraStream.getTracks().forEach((track) => track.stop());
+        cameraStream = null;
+      }
+
+      function estimatedFeet() {
+        const xs = points.map((point) => point.x);
+        const ys = points.map((point) => point.y);
+        const selectedWidth = Math.max(...xs) - Math.min(...xs);
+        const selectedHeight = Math.max(...ys) - Math.min(...ys);
+        const screenWidth = Math.max(1, measureLayer.clientWidth);
+        const screenHeight = Math.max(1, measureLayer.clientHeight);
+
+        return {
+          width: Math.max(1, Math.min(10, selectedWidth / screenWidth * 7.5)),
+          height: Math.max(1, Math.min(10, selectedHeight / screenHeight * 9)),
+        };
+      }
+
+      function productSummary(product) {
+        const height = (product.outerHeightInches / 12).toFixed(1);
+        const width = (product.outerWidthInches / 12).toFixed(1);
+        return product.categoryName + " - " + height + " ft H - " + width + " ft W";
+      }
+
+      function renderSuggestions(widthFt, heightFt) {
+        const maxWidth = widthFt * 12;
+        const maxHeight = heightFt * 12;
+        const products = (window.eagleSafeProducts || [])
+          .filter((product) => product.outerWidthInches <= maxWidth && product.outerHeightInches <= maxHeight)
+          .slice(0, 6);
+
+        const suggestionGrid = document.getElementById("suggestionGrid");
+        suggestionGrid.innerHTML = products.length
+          ? products
+              .map((product) => (
+                '<a class="suggestion-card" href="' + product.page + '">' +
+                '<div class="suggestion-image-wrap">' +
+                '<img class="suggestion-image" src="' + product.image + '" alt="' + product.model + ' safe locker">' +
+                "</div>" +
+                '<div class="suggestion-info">' +
+                "<h3>" + product.model + "</h3>" +
+                "<p>" + productSummary(product) + "</p>" +
+                "</div>" +
+                "</a>"
+              ))
+              .join("")
+          : '<p class="text">No ready model exactly matches this space. Please use Custom Locker Enquiry.</p>';
+      }
+
+      function finishMeasurement() {
+        if (points.length !== 4) return;
+        const estimate = estimatedFeet();
+        stopCamera();
+        document.getElementById("heightResult").textContent = estimate.height.toFixed(1) + " ft";
+        document.getElementById("widthResult").textContent = estimate.width.toFixed(1) + " ft";
+        renderSuggestions(estimate.width, estimate.height);
+        showScreen(resultScreen);
+      }
+
+      startButton.addEventListener("click", async () => {
+        startButton.disabled = true;
+        startButton.textContent = "Checking...";
+        if (await isArSupported()) {
+          await startCameraMeasure();
+        } else {
+          startUnsupportedCountdown();
+        }
+      });
+
+      measureLayer.addEventListener("click", addPoint);
+      resetButton.addEventListener("click", resetMeasurement);
+      finishButton.addEventListener("click", finishMeasurement);
+      measureAgainButton.addEventListener("click", startCameraMeasure);
+      window.addEventListener("pagehide", stopCamera);
+      window.addEventListener("resize", drawMeasurement);
+    </script>
+  </body>
+</html>
