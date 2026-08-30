@@ -156,12 +156,34 @@
         pointer-events: none;
       }
 
+      .ar-dom-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .ar-dom-line {
+        fill: rgba(22, 163, 74, 0.12);
+        stroke: #16a34a;
+        stroke-width: 4;
+        stroke-linejoin: round;
+      }
+
+      .ar-dom-point {
+        fill: #16a34a;
+        stroke: #ffffff;
+        stroke-width: 4;
+      }
+
       .measure-hud {
         position: absolute;
         left: 12px;
         right: 12px;
         bottom: 12px;
-        z-index: 3;
+        z-index: 5;
         display: grid;
         gap: 10px;
         padding: 14px;
@@ -411,6 +433,7 @@
       <section class="screen" id="measureScreen" hidden>
         <div class="ar-stage">
           <canvas class="ar-canvas" id="arCanvas"></canvas>
+          <svg class="ar-dom-overlay" id="arDomOverlay" aria-hidden="true"></svg>
           <div class="reticle is-paused" id="reticle" aria-hidden="true"></div>
           <div class="measure-hud">
             <span class="status-pill" id="trackingStatus">Searching for surface...</span>
@@ -483,6 +506,7 @@
       const finishButton = document.getElementById("finishButton");
       const measureAgainButton = document.getElementById("measureAgainButton");
       const arCanvas = document.getElementById("arCanvas");
+      const arDomOverlay = document.getElementById("arDomOverlay");
       const reticle = document.getElementById("reticle");
       const stepText = document.getElementById("stepText");
       const trackingStatus = document.getElementById("trackingStatus");
@@ -544,6 +568,7 @@
         trackingStatus.textContent = "Searching for surface...";
         stepText.textContent = "First scan the flat wall, floor or space where the locker will be placed.";
         reticle.classList.add("is-paused");
+        drawDomOverlay([]);
         updatePointList();
       }
 
@@ -621,12 +646,19 @@
           latestHitMatrix = hitPose.transform.matrix;
           startMarkingButton.disabled = markingStarted;
           addPointButton.disabled = !markingStarted || arPoints.length >= 4;
-          trackingStatus.textContent = markingStarted ? "Marking mode active." : "Surface found. Tap Start Marking Corners.";
+          trackingStatus.textContent =
+            arPoints.length === 4
+              ? "Corners selected. Tap Finish."
+              : markingStarted
+                ? "Marking mode active. Keep the target on each corner."
+                : "Surface found. Tap Start Marking Corners.";
         } else {
           latestHitMatrix = null;
           startMarkingButton.disabled = true;
           addPointButton.disabled = true;
-          trackingStatus.textContent = "Move phone slowly to find a surface...";
+          trackingStatus.textContent = markingStarted
+            ? "Keep the marked area in view and move slowly."
+            : "Move phone slowly to find a surface...";
         }
 
         const layer = session.renderState.baseLayer;
@@ -712,10 +744,43 @@
         gl.drawArrays(mode, 0, points.length);
       }
 
+      function drawDomOverlay(points) {
+        if (!arDomOverlay) return;
+        arDomOverlay.setAttribute("viewBox", "0 0 " + window.innerWidth + " " + window.innerHeight);
+        arDomOverlay.innerHTML = "";
+
+        if (points.length > 1) {
+          const tagName = points.length === 4 ? "polygon" : "polyline";
+          const line = document.createElementNS("http://www.w3.org/2000/svg", tagName);
+          line.setAttribute("class", "ar-dom-line");
+          line.setAttribute("points", points.map((point) => point.x + "," + point.y).join(" "));
+          arDomOverlay.appendChild(line);
+        }
+
+        points.forEach((point, index) => {
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("class", "ar-dom-point");
+          circle.setAttribute("cx", point.x);
+          circle.setAttribute("cy", point.y);
+          circle.setAttribute("r", index === points.length - 1 ? "10" : "8");
+          arDomOverlay.appendChild(circle);
+        });
+      }
+
+      function ndcToScreen(point) {
+        return {
+          x: (point[0] * 0.5 + 0.5) * window.innerWidth,
+          y: (-point[1] * 0.5 + 0.5) * window.innerHeight,
+        };
+      }
+
       function renderArOverlay(pose, layer) {
         if (!arOverlay) arOverlay = createArOverlay();
         const view = pose.views[0];
-        if (!view) return;
+        if (!view) {
+          drawDomOverlay([]);
+          return;
+        }
 
         const viewport = layer.getViewport(view);
         gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height);
@@ -724,6 +789,7 @@
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
         const projectedPoints = arPoints.map((point) => projectPoint(point, view)).filter(Boolean);
+        drawDomOverlay(projectedPoints.map(ndcToScreen));
         if (projectedPoints.length > 1) {
           const linePoints = projectedPoints.length === 4 ? [...projectedPoints, projectedPoints[0]] : projectedPoints;
           drawOverlayShape(linePoints, gl.LINE_STRIP, [0.09, 0.64, 0.29, 1], 12);
@@ -760,6 +826,7 @@
           hitTestSource.cancel?.();
           hitTestSource = null;
         }
+        drawDomOverlay([]);
         if (xrSession) {
           const session = xrSession;
           xrSession = null;
