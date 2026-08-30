@@ -335,7 +335,7 @@
             Measurement is only approximate. Please confirm final size before ordering.
           </p>
           <div class="action-row">
-            <button class="button" id="startButton" type="button">Check AR Support</button>
+            <button class="button" id="startButton" type="button">Start Measurement</button>
             <a class="button secondary" href="index.html">Back Home</a>
           </div>
         </div>
@@ -345,7 +345,7 @@
         <div class="panel">
           <h1 class="title">Device Not Supported</h1>
           <p class="text">
-            AR Measurement is not supported on this device or browser. Please try Chrome on a supported Android mobile.
+            AR Measurement is not available on this device or browser. Please try Chrome on a supported Android mobile.
           </p>
           <div class="countdown" id="countdown">7</div>
           <p class="text">You will be redirected to the home page automatically.</p>
@@ -456,6 +456,12 @@
         } catch (error) {
           return false;
         }
+      }
+
+      function canTryCameraMeasurement() {
+        const mobileLike = window.matchMedia("(max-width: 780px), (pointer: coarse)").matches;
+        const cameraReady = Boolean(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+        return mobileLike && cameraReady && window.isSecureContext;
       }
 
       async function startCameraMeasure() {
@@ -584,7 +590,9 @@
       startButton.addEventListener("click", async () => {
         startButton.disabled = true;
         startButton.textContent = "Checking...";
-        if (await isArSupported()) {
+        const webXrReady = await isArSupported();
+
+        if (webXrReady || canTryCameraMeasurement()) {
           await startCameraMeasure();
         } else {
           startUnsupportedCountdown();
