@@ -138,11 +138,13 @@
       }
 
       .ar-stage {
-        position: relative;
-        min-height: 76vh;
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        min-height: 100vh;
         overflow: hidden;
-        border-radius: 8px;
-        background: #050c18;
+        border-radius: 0;
+        background: transparent;
       }
 
       .ar-canvas {
@@ -150,10 +152,8 @@
         inset: 0;
         width: 100%;
         height: 100%;
-      }
-
-      .ar-canvas {
-        background: #050c18;
+        background: transparent;
+        pointer-events: none;
       }
 
       .measure-hud {
@@ -190,6 +190,16 @@
         content: "";
         position: absolute;
         background: #16a34a;
+      }
+
+      .reticle.is-paused {
+        border-color: #f59e0b;
+        box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.18);
+      }
+
+      .reticle.is-paused::before,
+      .reticle.is-paused::after {
+        background: #f59e0b;
       }
 
       .reticle::before {
@@ -401,13 +411,14 @@
       <section class="screen" id="measureScreen" hidden>
         <div class="ar-stage">
           <canvas class="ar-canvas" id="arCanvas"></canvas>
-          <div class="reticle" aria-hidden="true"></div>
+          <div class="reticle is-paused" id="reticle" aria-hidden="true"></div>
           <div class="measure-hud">
             <span class="status-pill" id="trackingStatus">Searching for surface...</span>
-            <p id="stepText">Move the center target to the top-left corner, then tap Add Point.</p>
-            <span class="hint">Mark 4 corners: top-left, top-right, bottom-right, bottom-left.</span>
+            <p id="stepText">First scan the flat wall, floor or space where the locker will be placed.</p>
+            <span class="hint">When the surface is found, tap Start Marking Corners. Then mark top-left, top-right, bottom-right, bottom-left.</span>
             <div class="ar-point-list" id="pointList"></div>
             <div class="action-row">
+              <button class="button" id="startMarkingButton" type="button" disabled>Start Marking Corners</button>
               <button class="button" id="addPointButton" type="button" disabled>Add Point</button>
               <button class="button" id="resetButton" type="button">Reset</button>
               <button class="button secondary" id="finishButton" type="button" disabled>Finish</button>
@@ -466,11 +477,13 @@
       const measureScreen = document.getElementById("measureScreen");
       const resultScreen = document.getElementById("resultScreen");
       const startButton = document.getElementById("startButton");
+      const startMarkingButton = document.getElementById("startMarkingButton");
       const addPointButton = document.getElementById("addPointButton");
       const resetButton = document.getElementById("resetButton");
       const finishButton = document.getElementById("finishButton");
       const measureAgainButton = document.getElementById("measureAgainButton");
       const arCanvas = document.getElementById("arCanvas");
+      const reticle = document.getElementById("reticle");
       const stepText = document.getElementById("stepText");
       const trackingStatus = document.getElementById("trackingStatus");
       const pointList = document.getElementById("pointList");
@@ -482,6 +495,7 @@
       let gl = null;
       let latestHitMatrix = null;
       let arPoints = [];
+      let markingStarted = false;
 
       function showScreen(screen) {
         [introScreen, unsupportedScreen, measureScreen, resultScreen].forEach((item) => {
@@ -521,11 +535,14 @@
 
       function resetMeasurement() {
         arPoints = [];
+        markingStarted = false;
         latestHitMatrix = null;
+        startMarkingButton.disabled = true;
         addPointButton.disabled = true;
         finishButton.disabled = true;
         trackingStatus.textContent = "Searching for surface...";
-        stepText.textContent = "Move the center target to the top-left corner, then tap Add Point.";
+        stepText.textContent = "First scan the flat wall, floor or space where the locker will be placed.";
+        reticle.classList.add("is-paused");
         updatePointList();
       }
 
@@ -555,7 +572,12 @@
           showScreen(measureScreen);
           resetMeasurement();
 
-          gl = arCanvas.getContext("webgl", { xrCompatible: true, alpha: true });
+          gl = arCanvas.getContext("webgl", {
+            xrCompatible: true,
+            alpha: true,
+            antialias: true,
+            premultipliedAlpha: false,
+          });
           if (!gl) throw new Error("WebGL not available");
 
           xrSession = await navigator.xr.requestSession("immersive-ar", {
@@ -564,7 +586,9 @@
             domOverlay: { root: document.body },
           });
 
-          xrSession.updateRenderState({ baseLayer: new XRWebGLLayer(xrSession, gl) });
+          xrSession.updateRenderState({
+            baseLayer: new XRWebGLLayer(xrSession, gl, { alpha: true }),
+          });
           xrReferenceSpace = await xrSession.requestReferenceSpace("local");
           const viewerSpace = await xrSession.requestReferenceSpace("viewer");
           hitTestSource = await xrSession.requestHitTestSource({ space: viewerSpace });
@@ -592,10 +616,12 @@
         if (hitTestResults.length) {
           const hitPose = hitTestResults[0].getPose(xrReferenceSpace);
           latestHitMatrix = hitPose.transform.matrix;
-          addPointButton.disabled = arPoints.length >= 4;
-          trackingStatus.textContent = "Surface found. Move target and add point.";
+          startMarkingButton.disabled = markingStarted;
+          addPointButton.disabled = !markingStarted || arPoints.length >= 4;
+          trackingStatus.textContent = markingStarted ? "Marking mode active." : "Surface found. Tap Start Marking Corners.";
         } else {
           latestHitMatrix = null;
+          startMarkingButton.disabled = true;
           addPointButton.disabled = true;
           trackingStatus.textContent = "Move phone slowly to find a surface...";
         }
@@ -603,11 +629,22 @@
         const layer = session.renderState.baseLayer;
         gl.bindFramebuffer(gl.FRAMEBUFFER, layer.framebuffer);
         gl.clearColor(0, 0, 0, 0);
+        gl.clearDepth(1);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       }
 
+      function startMarkingCorners() {
+        if (!latestHitMatrix) return;
+        markingStarted = true;
+        startMarkingButton.disabled = true;
+        addPointButton.disabled = false;
+        reticle.classList.remove("is-paused");
+        stepText.textContent = "Move the center target to the top-left corner, then tap Add Point.";
+        trackingStatus.textContent = "Marking mode active.";
+      }
+
       function addArPoint() {
-        if (!latestHitMatrix || arPoints.length >= 4) return;
+        if (!markingStarted || !latestHitMatrix || arPoints.length >= 4) return;
         arPoints.push(worldPointFromMatrix(latestHitMatrix));
         updatePointList();
 
@@ -695,6 +732,7 @@
         startButton.textContent = "Start Measurement";
       });
 
+      startMarkingButton.addEventListener("click", startMarkingCorners);
       addPointButton.addEventListener("click", addArPoint);
       resetButton.addEventListener("click", resetMeasurement);
       finishButton.addEventListener("click", finishMeasurement);
