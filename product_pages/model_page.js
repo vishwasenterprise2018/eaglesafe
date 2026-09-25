@@ -1,5 +1,4 @@
 (function () {
-  // Shared renderer for every product detail page. Each HTML page only supplies window.productModel.
   const current = window.productModel;
   const root = document.getElementById("root");
   let imageIndex = 0;
@@ -9,12 +8,7 @@
   if (savedTheme === "night") document.body.classList.add("night-theme");
 
   function escapeHtml(value) {
-    return String(value ?? "").replace(/[&<>"]/g, (match) => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-    }[match]));
+    return String(value ?? "").replace(/[&<>"]/g, (match) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[match]));
   }
 
   function inchToFt(value) {
@@ -41,13 +35,9 @@
   function dimensionRows() {
     const rows = (current.spec.dimensions || []).map((item) => [item.label, item.outer, item.inner]);
     const hasInner = rows.some((row) => String(row[2] || "").trim());
-    return {
-      headers: hasInner ? ["Specification", "Outer", "Inner"] : ["Specification", "Outer"],
-      rows: hasInner ? rows : rows.map((row) => [row[0], row[1]]),
-    };
+    return { headers: hasInner ? ["Specification", "Outer", "Inner"] : ["Specification", "Outer"], rows: hasInner ? rows : rows.map((row) => [row[0], row[1]]) };
   }
 
-  // Random related products shown below each model page.
   function randomSuggestions() {
     const catalogue = (window.eagleSafeProducts || []).filter((product) => product.model !== current.model);
     for (let index = catalogue.length - 1; index > 0; index -= 1) {
@@ -80,7 +70,6 @@
     );
   }
 
-  // Redraw the page whenever the gallery image or inch/feet unit changes.
   function draw() {
     const dimensions = dimensionRows();
     const specificationMarkup = current.spec.specificationRows

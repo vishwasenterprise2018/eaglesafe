@@ -377,6 +377,19 @@ window.eagleSafeProducts = [
     "modelType": "CLASSIC DEFENDER PLUS"
   },
   {
+    "model": "LSMT18",
+    "category": "large-safe",
+    "categoryName": "Large Safe",
+    "image": "image/product_Image/large/LSMT18/image1.png",
+    "page": "product_pages/large/LSMT18/LSMT18.html",
+    "outerHeightInches": 49,
+    "outerWidthInches": 32,
+    "outerDepthInches": 28,
+    "weightKg": 1200,
+    "volumeLitres": 720,
+    "modelType": "DEFENDER PLUS"
+  },
+  {
     "model": "MSMT1",
     "category": "medium-safe",
     "categoryName": "Medium Safe",
@@ -492,6 +505,32 @@ window.eagleSafeProducts = [
     "weightKg": 800,
     "volumeLitres": 430,
     "modelType": "DEFENDER PLUS"
+  },
+  {
+    "model": "MSMT10",
+    "category": "medium-safe",
+    "categoryName": "Medium Safe",
+    "image": "image/product_Image/medium/MSMT10/image1.png",
+    "page": "product_pages/medium/MSMT10/MSMT10.html",
+    "outerHeightInches": 42,
+    "outerWidthInches": 25,
+    "outerDepthInches": 25,
+    "weightKg": 700,
+    "volumeLitres": 430,
+    "modelType": "DEFENDER PRIME"
+  },
+  {
+    "model": "MSMT11",
+    "category": "medium-safe",
+    "categoryName": "Medium Safe",
+    "image": "image/product_Image/medium/MSMT11/image1.png",
+    "page": "product_pages/medium/MSMT11/MSMT11.html",
+    "outerHeightInches": 42,
+    "outerWidthInches": 29,
+    "outerDepthInches": 28,
+    "weightKg": 800,
+    "volumeLitres": 560,
+    "modelType": "DEFENDER PRIME"
   },
   {
     "model": "SSMT1",
