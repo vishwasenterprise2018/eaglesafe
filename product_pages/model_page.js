@@ -33,7 +33,15 @@
   }
 
   function dimensionRows() {
-    const rows = (current.spec.dimensions || []).map((item) => [item.label, item.outer, item.inner]);
+    // Keep the display order consistent without changing stored measurements.
+    const dimensionOrder = ["height", "width", "depth"];
+    const rank = (item) => {
+      const index = dimensionOrder.indexOf(item.label.trim().toLowerCase());
+      return index < 0 ? dimensionOrder.length : index;
+    };
+    const rows = [...(current.spec.dimensions || [])]
+      .sort((first, second) => rank(first) - rank(second))
+      .map((item) => [item.label, item.outer, item.inner]);
     const hasInner = rows.some((row) => String(row[2] || "").trim());
     return { headers: hasInner ? ["Specification", "Outer", "Inner"] : ["Specification", "Outer"], rows: hasInner ? rows : rows.map((row) => [row[0], row[1]]) };
   }
