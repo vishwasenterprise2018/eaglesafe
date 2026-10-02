@@ -1,6 +1,11 @@
 (function () {
   const current = window.productModel;
   const root = document.getElementById("root");
+  // Share the canonical public URL even from index.html or a local preview.
+  const catalogueProduct = (window.eagleSafeProducts || []).find(product => product.model === current.model);
+  const productUrl = catalogueProduct
+    ? new URL(catalogueProduct.page, "https://eaglesafe.in/").href
+    : document.querySelector('link[rel="canonical"]')?.href || window.location.href;
   let imageIndex = 0;
   let unit = "inch";
 
@@ -105,7 +110,7 @@
       '<p class="disclaimer">' +
       escapeHtml(current.spec.disclaimer || "") +
       '</p><h3 class="enquiry-title">For Book or Enquiry</h3><div class="action-buttons"><a class="action-button call-button" href="tel:+919057077915">Call +91 9057077915</a><a class="action-button whatsapp-button" href="https://wa.me/919057077915?text=' +
-      encodeURIComponent("I Want to Know More About Model " + current.model) +
+      encodeURIComponent("I Want to Know More About Model " + current.model + "\n\n" + productUrl) +
       '" target="_blank" rel="noreferrer">Whatsapp 9057077915</a></div></section></div>' +
       suggestionMarkup() +
       '</main><div class="zoom-overlay" hidden><button class="zoom-close" type="button">x</button><img class="zoom-image" src="' +

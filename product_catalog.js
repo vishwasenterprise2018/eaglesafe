@@ -10,7 +10,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 30,
     "weightKg": 2200,
     "volumeLitres": 1840,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "key lock",
+      "combination lock",
+      "auto lock"
+    ]
   },
   {
     "model": "DDMT2",
@@ -23,7 +28,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 30,
     "weightKg": 2050,
     "volumeLitres": 1490,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "DDMT3",
@@ -36,7 +46,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1300,
     "volumeLitres": 840,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "DDMT4",
@@ -49,7 +64,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1700,
     "volumeLitres": 1120,
-    "modelType": "CLASSIC DEFENDER PLUS"
+    "modelType": "CLASSIC DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "flower lock",
+      "combination lock",
+      "auto lock"
+    ]
   },
   {
     "model": "DDMT5",
@@ -62,7 +83,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 30,
     "weightKg": 2500,
     "volumeLitres": 1610,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "DDMT6",
@@ -75,7 +101,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1100,
     "volumeLitres": 690,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "combination lock",
+      "underground lock"
+    ]
   },
   {
     "model": "DDMT7",
@@ -88,7 +119,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1300,
     "volumeLitres": 870,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "flower lock",
+      "combination lock",
+      "underground lock"
+    ]
   },
   {
     "model": "DDMT8",
@@ -101,7 +138,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 25,
     "weightKg": 1100,
     "volumeLitres": 660,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "DDMT9",
@@ -114,7 +156,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 30,
     "weightKg": 1700,
     "volumeLitres": 1260,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "DDMT10",
@@ -127,7 +174,11 @@ window.eagleSafeProducts = [
     "outerDepthInches": 30,
     "weightKg": 1500,
     "volumeLitres": 1140,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "DDMT11",
@@ -140,7 +191,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 30,
     "weightKg": 1800,
     "volumeLitres": 1360,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "DDMT12",
@@ -153,7 +209,11 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 800,
     "volumeLitres": 590,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "flower lock"
+    ]
   },
   {
     "model": "LSMT1",
@@ -166,7 +226,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1200,
     "volumeLitres": 720,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT2",
@@ -179,7 +245,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1500,
     "volumeLitres": 980,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT3",
@@ -192,7 +264,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1125,
     "volumeLitres": 670,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT4",
@@ -205,7 +283,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1600,
     "volumeLitres": 950,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT5",
@@ -218,7 +301,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1200,
     "volumeLitres": 720,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT6",
@@ -231,7 +320,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1600,
     "volumeLitres": 950,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT7",
@@ -244,7 +339,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1200,
     "volumeLitres": 720,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT8",
@@ -257,7 +357,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 30,
     "weightKg": 1350,
     "volumeLitres": 810,
-    "modelType": "CLASSIC DEFENDER PLUS"
+    "modelType": "CLASSIC DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT9",
@@ -270,7 +376,11 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1800,
     "volumeLitres": 1060,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock"
+    ]
   },
   {
     "model": "LSMT10",
@@ -283,7 +393,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 29,
     "weightKg": 1700,
     "volumeLitres": 1010,
-    "modelType": "CLASSIC DEFENDER PLUS"
+    "modelType": "CLASSIC DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT11",
@@ -296,7 +412,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 29,
     "weightKg": 1350,
     "volumeLitres": 780,
-    "modelType": "CLASSIC DEFENDER PLUS"
+    "modelType": "CLASSIC DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT12",
@@ -309,7 +430,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 25,
     "weightKg": 900,
     "volumeLitres": 500,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT13",
@@ -322,7 +448,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 25,
     "weightKg": 900,
     "volumeLitres": 500,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT14",
@@ -335,7 +467,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1500,
     "volumeLitres": 950,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT15",
@@ -348,7 +486,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1500,
     "volumeLitres": 950,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT16",
@@ -361,7 +505,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1200,
     "volumeLitres": 720,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT17",
@@ -374,7 +524,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 30,
     "weightKg": 1350,
     "volumeLitres": 810,
-    "modelType": "CLASSIC DEFENDER PLUS"
+    "modelType": "CLASSIC DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "LSMT18",
@@ -387,7 +543,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1200,
     "volumeLitres": 720,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT1",
@@ -400,7 +562,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 27,
     "weightKg": 700,
     "volumeLitres": 430,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT2",
@@ -413,7 +581,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 27,
     "weightKg": 650,
     "volumeLitres": 430,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT3",
@@ -426,7 +599,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 27,
     "weightKg": 500,
     "volumeLitres": 430,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT4",
@@ -439,7 +617,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 1000,
     "volumeLitres": 580,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT5",
@@ -452,7 +636,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 24,
     "weightKg": 500,
     "volumeLitres": 340,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT6",
@@ -465,7 +654,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 27,
     "weightKg": 800,
     "volumeLitres": 430,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT7",
@@ -478,7 +672,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 24,
     "weightKg": 500,
     "volumeLitres": 340,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT8",
@@ -491,7 +690,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 22,
     "weightKg": 350,
     "volumeLitres": 240,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT9",
@@ -504,7 +708,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 27,
     "weightKg": 800,
     "volumeLitres": 430,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT10",
@@ -517,7 +727,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 25,
     "weightKg": 700,
     "volumeLitres": 430,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "MSMT11",
@@ -530,7 +745,13 @@ window.eagleSafeProducts = [
     "outerDepthInches": 28,
     "weightKg": 800,
     "volumeLitres": 560,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "SSMT1",
@@ -543,7 +764,11 @@ window.eagleSafeProducts = [
     "outerDepthInches": 16,
     "weightKg": 0,
     "volumeLitres": 100,
-    "modelType": "OTHERS"
+    "modelType": "OTHERS",
+    "searchTerms": [
+      "single door",
+      "key lock"
+    ]
   },
   {
     "model": "SSMT2",
@@ -556,7 +781,11 @@ window.eagleSafeProducts = [
     "outerDepthInches": 16,
     "weightKg": 0,
     "volumeLitres": 80,
-    "modelType": "OTHERS"
+    "modelType": "OTHERS",
+    "searchTerms": [
+      "single door",
+      "key lock"
+    ]
   },
   {
     "model": "SSMT3",
@@ -569,7 +798,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 10,
     "weightKg": 0,
     "volumeLitres": 20,
-    "modelType": "OTHERS"
+    "modelType": "OTHERS",
+    "searchTerms": [
+      "single door",
+      "key lock",
+      "digital lock"
+    ]
   },
   {
     "model": "CLMT2",
@@ -582,7 +816,11 @@ window.eagleSafeProducts = [
     "outerDepthInches": 24,
     "weightKg": 850,
     "volumeLitres": 500,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "CLMT3",
@@ -595,7 +833,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 24,
     "weightKg": 1800,
     "volumeLitres": 850,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "CLMT4",
@@ -608,7 +851,11 @@ window.eagleSafeProducts = [
     "outerDepthInches": 24,
     "weightKg": 2200,
     "volumeLitres": 1060,
-    "modelType": "DEFENDER PLUS"
+    "modelType": "DEFENDER PLUS",
+    "searchTerms": [
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "TDMT1",
@@ -621,7 +868,11 @@ window.eagleSafeProducts = [
     "outerDepthInches": 31,
     "weightKg": 3800,
     "volumeLitres": 2850,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "key lock",
+      "combination lock"
+    ]
   },
   {
     "model": "TDMT2",
@@ -634,7 +885,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": 30,
     "weightKg": 3000,
     "volumeLitres": 2340,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "key lock",
+      "flower lock",
+      "combination lock"
+    ]
   },
   {
     "model": "SRDMT1",
@@ -647,7 +903,10 @@ window.eagleSafeProducts = [
     "outerDepthInches": null,
     "weightKg": 850,
     "volumeLitres": null,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "key lock"
+    ]
   },
   {
     "model": "SRDMT2",
@@ -660,7 +919,11 @@ window.eagleSafeProducts = [
     "outerDepthInches": null,
     "weightKg": 1000,
     "volumeLitres": null,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "key lock",
+      "digital lock"
+    ]
   },
   {
     "model": "SRDMT3",
@@ -673,7 +936,12 @@ window.eagleSafeProducts = [
     "outerDepthInches": null,
     "weightKg": 1100,
     "volumeLitres": null,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "key lock",
+      "digital lock",
+      "combination lock"
+    ]
   },
   {
     "model": "SRDMT4",
@@ -686,7 +954,11 @@ window.eagleSafeProducts = [
     "outerDepthInches": null,
     "weightKg": 1200,
     "volumeLitres": null,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "key lock",
+      "digital lock"
+    ]
   },
   {
     "model": "SRDMT5",
@@ -699,7 +971,10 @@ window.eagleSafeProducts = [
     "outerDepthInches": null,
     "weightKg": 900,
     "volumeLitres": null,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "key lock"
+    ]
   },
   {
     "model": "SRDMT6",
@@ -712,6 +987,9 @@ window.eagleSafeProducts = [
     "outerDepthInches": null,
     "weightKg": 1050,
     "volumeLitres": null,
-    "modelType": "DEFENDER PRIME"
+    "modelType": "DEFENDER PRIME",
+    "searchTerms": [
+      "key lock"
+    ]
   }
 ];

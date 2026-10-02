@@ -500,7 +500,9 @@
     <main class="product-page"><h1 class="page-title">Our Product</h1><p class="page-intro">Browse EAGLE SAFE safe locker models for gold, jewellery, cash, documents and business security. Filter by locker type, size, volume, weight and model type.</p><div class="product-layout"><aside class="filter-panel" aria-label="Product filters"><button class="filter-close" type="button" aria-label="Close filters">x</button><h2 class="filter-title">Filter</h2><div class="filter-options" id="categoryFilters"></div><div class="size-filter"><h3 class="size-filter-title">Size, Volume &amp; Weight</h3><label class="range-field" for="heightFilter"><span class="range-label">Height <span class="range-value" id="heightValue">Under 10 ft</span></span><input class="range-input" id="heightFilter" type="range" min="0" max="10" step="1" value="10"><span class="range-scale"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10 ft</span></span></label><label class="range-field" for="widthFilter"><span class="range-label">Width <span class="range-value" id="widthValue">Under 10 ft</span></span><input class="range-input" id="widthFilter" type="range" min="0" max="10" step="1" value="10"><span class="range-scale"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10 ft</span></span></label><label class="range-field" for="volumeFilter"><span class="range-label">Volume <span class="range-value" id="volumeValue">0 L+</span></span><input class="range-input" id="volumeFilter" type="range" min="0" max="2000" step="50" value="0"><span class="range-scale"><span>0L+</span><span>500L+</span><span>1000L+</span><span>1500L+</span><span>2000L+</span></span></label><label class="range-field" for="weightFilter"><span class="range-label">Weight <span class="range-value" id="weightValue">0 KG+</span></span><input class="range-input" id="weightFilter" type="range" min="0" max="2500" step="50" value="0"><span class="range-scale"><span>0KG+</span><span>500KG+</span><span>1000KG+</span><span>1500KG+</span><span>2500KG+</span></span></label></div><div class="model-filter"><h3 class="size-filter-title">Model Type</h3><div class="model-options" id="modelTypeFilters"></div><button class="clear-filter" id="clearFilters" type="button">Clear Filters</button></div></aside><section class="product-grid" id="productGrid" aria-label="Products"></section></div></main>
     <button class="mobile-filter-toggle" type="button" aria-label="Open filters">Filter</button>
     <button class="theme-toggle" type="button" aria-label="Toggle day or night theme">Night Mode</button>
-    <script src="product_catalog.js"></script>
+    <script src="product_catalog.js?v=6.2-features"></script>
+    <script src="assets/fuse.min.js"></script>
+    <script src="assets/product-search.js?v=6.2-features"></script>
     <script>
       const themeToggle = document.querySelector(".theme-toggle");
       const savedTheme = localStorage.getItem("eagleSafeTheme");
@@ -534,6 +536,21 @@
       const volumeFilter = document.getElementById("volumeFilter");
       const weightFilter = document.getElementById("weightFilter");
       const filterParams = new URLSearchParams(window.location.search);
+      document.querySelector('.product-layout').insertAdjacentHTML('beforebegin', `
+        <form class="catalogue-search" role="search" aria-label="Product search">
+          <label class="search-label" for="productSearch">Search products</label>
+          <div class="search-controls">
+            <input id="productSearch" type="search" placeholder="Model, category or model type" maxlength="120" autocomplete="off" aria-controls="productGrid" spellcheck="false">
+            <button id="clearSearch" type="button" aria-label="Clear search" title="Clear search" hidden><i data-lucide="x" aria-hidden="true"></i></button>
+            <button class="search-submit" type="submit" aria-label="Search products" title="Search products"><i data-lucide="search" aria-hidden="true"></i></button>
+          </div>
+          <p class="search-status" id="searchStatus" role="status" aria-live="polite"></p>
+        </form>`);
+      const searchInput = document.getElementById('productSearch');
+      const searchStatus = document.getElementById('searchStatus');
+      const clearSearch = document.getElementById('clearSearch');
+      const searchProducts = window.createProductSearch(window.eagleSafeProducts || []);
+      searchInput.value = (filterParams.get('q') || '').slice(0, 120);
       let selectedCategory = filterParams.get("category") || "all";
       if (!categories.some(([key]) => key === selectedCategory)) selectedCategory = "all";
       let selectedModelType = filterParams.get("modelType") || "all";
@@ -549,6 +566,7 @@
 
       function updateFilterUrl() {
         const params = new URLSearchParams();
+        if (searchInput.value.trim()) params.set('q', searchInput.value.trim());
         if (selectedCategory !== "all") params.set("category", selectedCategory);
         if (selectedModelType !== "all") params.set("modelType", selectedModelType);
         if (heightFilter.value !== "10") params.set("height", heightFilter.value);
@@ -576,7 +594,8 @@
         document.getElementById("widthValue").textContent = "Under " + widthFilter.value + " ft";
         document.getElementById("volumeValue").textContent = minVolume + " L+";
         document.getElementById("weightValue").textContent = minWeight + " KG+";
-        const matches = (window.eagleSafeProducts || []).filter((product) => {
+        const searchResult = searchProducts(searchInput.value);
+        const matches = searchResult.products.filter((product) => {
           const modelType = product.modelType || "OTHERS";
           return (selectedCategory === "all" || product.category === selectedCategory)
             && (selectedModelType === "all" || modelType === selectedModelType)
@@ -585,6 +604,10 @@
             && (product.volumeLitres || 0) >= minVolume
             && (product.weightKg || 0) >= minWeight;
         });
+        clearSearch.hidden = !searchInput.value;
+        searchStatus.textContent = searchResult.correction
+          ? 'Showing results for "' + searchResult.correction + '".'
+          : '';
         function productSummary(product) {
           const pieces = [];
           if (product.volumeLitres > 0) pieces.push("~" + product.volumeLitres + " L");
@@ -593,7 +616,34 @@
           return pieces.join(" - ");
         }
         productGrid.innerHTML = matches.length ? matches.map((product) => '<a class="product-card" href="' + product.page + '"><div class="product-image-wrap"><img class="product-image" src="' + product.image + '" alt="' + product.model + ' ' + product.categoryName + ' safe locker"></div><div class="product-info"><p class="product-model">' + product.model + '</p><p class="product-category">' + product.categoryName + ' - ' + (product.outerHeightInches / 12).toFixed(1) + ' ft H - ' + (product.outerWidthInches / 12).toFixed(1) + ' ft W</p><p class="product-category">' + productSummary(product) + '</p></div></a>').join("") : '<p class="no-results">No locker matches these filters. Try changing the filter values.</p>';
+        if (!matches.length && searchInput.value.trim()) {
+          productGrid.querySelector('.no-results').textContent = searchResult.invalidModel
+            ? 'No matching model found. Check the model name.'
+            : searchResult.products.length
+              ? 'No products match this search with the selected filters. Try clearing the filters.'
+              : 'No matching products found. Try another search.';
+        }
       }
+      let searchTimer;
+      function applySearch() {
+        clearTimeout(searchTimer);
+        updateFilterUrl();
+        renderProducts();
+      }
+      searchInput.addEventListener('input', () => {
+        clearSearch.hidden = !searchInput.value;
+        clearTimeout(searchTimer);
+        searchTimer = setTimeout(applySearch, 150);
+      });
+      document.querySelector('.catalogue-search').addEventListener('submit', event => {
+        event.preventDefault();
+        applySearch();
+      });
+      clearSearch.addEventListener('click', () => {
+        searchInput.value = '';
+        applySearch();
+        searchInput.focus();
+      });
       [heightFilter, widthFilter, volumeFilter, weightFilter].forEach((input) => input.addEventListener("input", () => { updateFilterUrl(); renderProducts(); }));
       document.getElementById("clearFilters").addEventListener("click", () => { selectedCategory = "all"; selectedModelType = "all"; heightFilter.value = 10; widthFilter.value = 10; volumeFilter.value = 0; weightFilter.value = 0; updateFilterUrl(); renderCategoryButtons(); renderModelTypeButtons(); renderProducts(); });
       renderCategoryButtons();

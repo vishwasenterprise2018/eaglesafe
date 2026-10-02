@@ -1,4 +1,14 @@
 /* Shared v6 visual system. Opaque surfaces remain readable without backdrop-filter. */
+.ui-v6 .catalogue-search { max-width: 640px; margin: 24px auto 12px; }
+.ui-v6 .search-label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.ui-v6 .search-controls { display: flex; align-items: center; gap: 6px; padding: 5px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-bg); }
+.ui-v6 .search-controls input { flex: 1; width: 0; min-width: 0; height: 44px; padding: 0 8px; border: 0; background: transparent; color: var(--text-main); font: inherit; font-size: 16px; }
+.ui-v6 .search-controls input::placeholder { color: var(--text-muted); opacity: 1; }
+.ui-v6 .search-controls input::-webkit-search-cancel-button { -webkit-appearance: none; }
+.ui-v6 .search-controls button { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 44px; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 6px; color: var(--text-main); background: transparent; cursor: pointer; }
+.ui-v6 .search-controls button[hidden] { display: none; }
+.ui-v6 .search-controls .search-submit { background: var(--button-bg); color: var(--button-text); }
+.ui-v6 .search-status { min-height: 22px; margin: 8px 0 0; font-size: 13px; color: var(--text-muted); overflow-wrap: anywhere; }
 html { scroll-behavior: smooth; scroll-padding-top: 140px; }
 body.ui-v6 {
   --page-bg: #edf1f3;
