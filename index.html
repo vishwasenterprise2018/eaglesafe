@@ -1121,7 +1121,7 @@
 
       }
     </style>
-    <link rel="stylesheet" href="assets/liquid-glass.css" />
+    <link rel="stylesheet" href="assets/liquid-glass.css?v=6.2-header" />
   </head>
   <body class="ui-v6">
     <script>document.body.classList.toggle('night-theme', document.documentElement.dataset.theme === 'night');</script>
@@ -1182,14 +1182,20 @@
     <section class="brochure-section"><a class="brochure-link" href="brochure/Eagle%20Safe%20Market%20Card.pdf" target="_blank" rel="noreferrer">Download Our Brochure</a></section>
     <section class="social-section" aria-labelledby="social-title"><h2 class="social-title" id="social-title">Social Media</h2><div class="social-links"><a class="social-link" href="https://www.facebook.com/share/1831639QQw/" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on Facebook">Facebook</a><a class="social-link" href="https://www.instagram.com/eaglesafesecurity?igsh=MW8zaDZ6b2tmbndteA==" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on Instagram">Instagram</a><a class="social-link" href="https://youtube.com/@eaglesafesecurity?si=yYZytCasZuPDr8JM" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on YouTube">YouTube</a><a class="social-link" href="https://wa.me/919057077915" target="_blank" rel="noreferrer" aria-label="EAGLE SAFE on WhatsApp">WhatsApp</a></div></section>
     <footer class="site-footer">This website was designed, created and is maintained by <a href="https://www.google.com/search?q=Tim+W41k3r" target="_blank" rel="noreferrer">Tim W41k3r</a>.</footer>
-    <button class="theme-toggle" type="button" aria-label="Toggle day or night theme">Night Mode</button>
+    <button class="theme-toggle" type="button" aria-label="Toggle day or night theme"></button>
 
     <script src="product_catalog.js"></script>
     <script>
       const themeToggle = document.querySelector(".theme-toggle");
       const savedTheme = localStorage.getItem("eagleSafeTheme");
       if (savedTheme === "night") document.body.classList.add("night-theme");
-      function updateThemeButton() { themeToggle.textContent = document.body.classList.contains("night-theme") ? "Day Mode" : "Night Mode"; }
+      function updateThemeButton() {
+        const night = document.body.classList.contains('night-theme');
+        document.documentElement.dataset.theme = night ? 'night' : 'day';
+        themeToggle.setAttribute('aria-label', night ? 'Switch to Day Mode' : 'Switch to Night Mode');
+        themeToggle.setAttribute('aria-pressed', String(night));
+        themeToggle.title = themeToggle.getAttribute('aria-label');
+      }
       themeToggle?.addEventListener("click", () => { document.body.classList.toggle("night-theme"); localStorage.setItem("eagleSafeTheme", document.body.classList.contains("night-theme") ? "night" : "day"); updateThemeButton(); });
       updateThemeButton();
       const slidingAdImages = ["image/sliding_image/image1.jpg", "image/sliding_image/image2.jpg", "image/sliding_image/image3.jpg", "image/sliding_image/image4.jpg", "image/sliding_image/image5.jpg"];
@@ -1244,7 +1250,7 @@
       renderHomeProducts();    
     </script>
     <script src="assets/lucide.min.js"></script>
-    <script src="assets/liquid-glass.js"></script>
+    <script src="assets/liquid-glass.js?v=6.2-header"></script>
   </body>
 </html>
 

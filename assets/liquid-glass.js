@@ -23,8 +23,9 @@
   function decorateTheme() {
     const night = document.body.classList.contains('night-theme');
     document.documentElement.dataset.theme = night ? 'night' : 'day';
-    iconButton('.theme-toggle', night ? 'sun' : 'moon', night ? 'Switch to Day Mode' : 'Switch to Night Mode');
     const toggle = document.querySelector('.theme-toggle');
+    toggle?.setAttribute('aria-label', night ? 'Switch to Day Mode' : 'Switch to Night Mode');
+    if (toggle) toggle.title = toggle.getAttribute('aria-label');
     toggle?.setAttribute('aria-pressed', String(night));
     document.querySelectorAll('.mobile-filter-toggle').forEach(button => {
       button.innerHTML = icon('sliders-horizontal') + '<span>Filters</span>';

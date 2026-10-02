@@ -117,14 +117,18 @@
       escapeHtml(current.images[imageIndex]) +
       '" alt="Large ' +
       escapeHtml(current.model) +
-      ' product view"></div><button class="theme-toggle" type="button" aria-label="Toggle day or night theme">Night Mode</button>';
+      ' product view"></div><button class="theme-toggle" type="button" aria-label="Toggle day or night theme"></button>';
     bindEvents();
   }
 
   function bindEvents() {
     const themeToggle = root.querySelector(".theme-toggle");
     function updateThemeButton() {
-      themeToggle.textContent = document.body.classList.contains("night-theme") ? "Day Mode" : "Night Mode";
+      const night = document.body.classList.contains('night-theme');
+      document.documentElement.dataset.theme = night ? 'night' : 'day';
+      themeToggle.setAttribute('aria-label', night ? 'Switch to Day Mode' : 'Switch to Night Mode');
+      themeToggle.setAttribute('aria-pressed', String(night));
+      themeToggle.title = themeToggle.getAttribute('aria-label');
     }
     themeToggle?.addEventListener("click", () => {
       document.body.classList.toggle("night-theme");

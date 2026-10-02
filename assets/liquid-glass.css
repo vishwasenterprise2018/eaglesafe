@@ -1,5 +1,32 @@
 /* Shared v6 visual system. Opaque surfaces remain readable without backdrop-filter. */
-.ui-v6 .catalogue-search { max-width: 640px; margin: 24px auto 12px; }
+.ui-v6 .catalogue-search {
+  position: fixed; z-index: 36; top: 90px; right: 18px;
+  width: min(560px, calc(100% - 36px)); margin: 0; padding: 16px;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: #f5f8fa; box-shadow: var(--glass-shadow);
+  opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-12px);
+  transition: opacity 180ms ease, transform 220ms ease, visibility 0s linear 220ms;
+}
+.ui-v6.night-theme .catalogue-search { background: #12304c; }
+.ui-v6 .catalogue-search.is-open {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+  transition: opacity 180ms ease, transform 220ms ease, visibility 0s;
+}
+.ui-v6 .search-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+.ui-v6 .search-panel-heading .search-label { margin: 0; }
+.ui-v6 .search-close { display: grid; place-items: center; width: 36px; height: 36px; flex: 0 0 36px; border: 0; background: transparent; color: var(--text-main); cursor: pointer; }
+.ui-v6 .search-toggle { position: fixed; top: 17px; right: 78px; z-index: 37; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%; color: var(--text-main); cursor: pointer; }
+.ui-v6 .search-toggle[data-active="true"] { border-color: var(--accent); }
+.ui-v6.has-catalogue-search .page-header { padding-right: max(148px, calc((100% - 1320px)/2 + 124px)); }
+@media (max-width: 860px) {
+  .ui-v6 .search-toggle { top: 12px; right: 70px; }
+  .ui-v6 .catalogue-search { top: 80px; right: 14px; width: calc(100% - 28px); }
+  .ui-v6.has-catalogue-search .page-header { padding-right: 136px; }
+}
+@media (max-width: 600px) {
+  .ui-v6.has-catalogue-search .page-header .header-links { display: none; }
+  .ui-v6 .catalogue-search { padding: 12px; }
+}
 .ui-v6 .search-label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
 .ui-v6 .search-controls { display: flex; align-items: center; gap: 6px; padding: 5px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-bg); }
 .ui-v6 .search-controls input { flex: 1; width: 0; min-width: 0; height: 44px; padding: 0 8px; border: 0; background: transparent; color: var(--text-main); font: inherit; font-size: 16px; }
@@ -49,7 +76,7 @@ body.ui-v6 * { letter-spacing: 0; }
 .ui-v6 :is(button,a,input):focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 .ui-v6 :is(button,a) { -webkit-tap-highlight-color: transparent; }
 .ui-v6 .lucide { width: 20px; height: 20px; flex-shrink: 0; stroke-width: 1.7; }
-.ui-v6 :is(.site-header,.page-header,.quick-nav,.quick-nav-dropdown,.filter-panel,.product-card,.gallery,.trust-card,.theme-toggle,.mobile-filter-toggle,.gallery-button,.product-arrow,.slider-button) {
+.ui-v6 :is(.site-header,.page-header,.quick-nav,.quick-nav-dropdown,.filter-panel,.product-card,.gallery,.trust-card,.theme-toggle,.search-toggle,.mobile-filter-toggle,.gallery-button,.product-arrow,.slider-button) {
   background: var(--panel-bg);
   background-image: linear-gradient(125deg, rgba(255,255,255,.09), transparent 45%, rgba(255,255,255,.03));
   border: 1px solid var(--border);
@@ -143,8 +170,16 @@ body.ui-v6 * { letter-spacing: 0; }
 .ui-v6 .social-link { border-radius: 6px; background: var(--panel-bg); }
 .ui-v6 .site-footer { padding: 22px 20px; background: rgba(6,19,31,.94); color: #c5d6e5; font-size: 12px; }
 .ui-v6 .site-footer a { color: #fff; }
-.ui-v6 .theme-toggle { width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 50%; z-index: 34; color: var(--text-main); }
-.ui-v6 .theme-toggle::before { display: none; }
+.ui-v6 .theme-toggle { display: grid; place-items: center; padding: 0; font-size: 0; width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 50%; z-index: 34; color: var(--text-main); }
+/* Lucide Moon/Sun paths are embedded so the correct icon paints without waiting for JavaScript or another request. */
+.ui-v6 .theme-toggle::before {
+  content: ''; display: block; width: 22px; height: 22px; background: currentColor;
+  --theme-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401'/%3E%3C/svg%3E");
+  -webkit-mask: var(--theme-icon) center / contain no-repeat; mask: var(--theme-icon) center / contain no-repeat;
+}
+html[data-theme='night'] .ui-v6 .theme-toggle::before {
+  --theme-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v2'/%3E%3Cpath d='M12 20v2'/%3E%3Cpath d='m4.93 4.93 1.41 1.41'/%3E%3Cpath d='m17.66 17.66 1.41 1.41'/%3E%3Cpath d='M2 12h2'/%3E%3Cpath d='M20 12h2'/%3E%3Cpath d='m6.34 17.66-1.41 1.41'/%3E%3Cpath d='m19.07 4.93-1.41 1.41'/%3E%3C/svg%3E");
+}
 .ui-v6 .page-header { position: sticky; top: 0; z-index: 32; }
 .ui-v6 .product-page { width: min(1320px, calc(100% - 64px)); margin: 48px auto 90px; }
 .ui-v6 .page-title { font-size: 44px; margin-bottom: 12px; text-align: left; font-weight: 700; line-height: 1.15; }
