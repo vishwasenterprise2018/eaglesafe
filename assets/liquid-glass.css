@@ -77,6 +77,7 @@ body.ui-v6 * { letter-spacing: 0; }
 .ui-v6 .brand-signature { display: block; margin-top: 6px; font-size: 10px; font-weight: 700; color: var(--text-muted); }
 .ui-v6 .header-caption { margin: 0; color: var(--text-muted); font-size: 13px; }
 .ui-v6 .header-links { display: flex; align-items: center; gap: 26px; }
+.ui-v6 .mobile-enquiry-label { display: none; }
 .ui-v6 .header-links a { font-size: 14px; font-weight: 700; color: var(--text-main); text-decoration: none; }
 .ui-v6 .quick-nav { position: sticky; top: 0; z-index: 32; border-width: 0 0 1px; }
 .ui-v6 .quick-nav-inner { max-width: 1320px; padding: 8px 0; justify-content: space-between; }
@@ -317,7 +318,8 @@ html[data-theme='night'] .ui-v6 .theme-toggle::before {
   .ui-v6 .details-title { font-size: 22px; }
   .ui-v6 .unit-toggle { font-size: 11px; }
   .ui-v6 .theme-toggle { right: 16px; bottom: max(16px,env(safe-area-inset-bottom)); }
-  .ui-v6 .header-links .header-enquiry { display: none; }
+  .ui-v6 .header-links .header-home, .ui-v6 .desktop-enquiry-label { display: none; }
+  .ui-v6 .mobile-enquiry-label { display: inline; }
   .ui-v6 .suggestions-header h2 { font-size: 22px; }
 }
 @media (max-width: 640px) {

@@ -46,7 +46,7 @@
     if (document.querySelector('.site-header')) {
       header.insertAdjacentHTML('beforeend', '<p class="header-caption">Security for what matters.</p>');
     } else if (!isModel) {
-      header.insertAdjacentHTML('beforeend', '<nav class="header-links" aria-label="Main navigation"><a href="index.html">Home</a><a class="header-enquiry" href="index.html#enquiry-section">Enquire</a></nav>');
+      header.insertAdjacentHTML('beforeend', '<nav class="header-links" aria-label="Main navigation"><a class="header-home" href="index.html">Home</a><a class="header-enquiry" href="index.html#enquiry-section"><span class="desktop-enquiry-label">Enquire</span><span class="mobile-enquiry-label">Enquiry</span></a></nav>');
     }
   }
 
