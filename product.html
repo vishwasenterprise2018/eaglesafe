@@ -492,7 +492,7 @@
         }
       }
     </style>
-    <link rel="stylesheet" href="assets/liquid-glass.css?v=6.2-header" />
+    <link rel="stylesheet" href="assets/liquid-glass.css?v=6.2-search-layout" />
   </head>
   <body class="ui-v6">
     <script>document.body.classList.toggle('night-theme', document.documentElement.dataset.theme === 'night');</script>
@@ -542,14 +542,18 @@
       const volumeFilter = document.getElementById("volumeFilter");
       const weightFilter = document.getElementById("weightFilter");
       const filterParams = new URLSearchParams(window.location.search);
-      document.body.classList.add('has-catalogue-search');
-      document.body.insertAdjacentHTML('beforeend', `
-        <button class="search-toggle" type="button" aria-label="Open product search" title="Search products" aria-controls="catalogueSearch" aria-expanded="false"><i data-lucide="search" aria-hidden="true"></i></button>
-        <form class="catalogue-search" id="catalogueSearch" role="search" aria-label="Product search" aria-hidden="true" inert>
-          <div class="search-panel-heading">
-            <label class="search-label" for="productSearch">Search products</label>
-            <button class="search-close" type="button" aria-label="Close search" title="Close search"><i data-lucide="x" aria-hidden="true"></i></button>
-          </div>
+      // Keep search beside the introduction on desktop and below it on small screens.
+      const catalogueHeading = document.createElement('div');
+      catalogueHeading.className = 'catalogue-heading';
+      const catalogueCopy = document.createElement('div');
+      catalogueCopy.className = 'catalogue-copy';
+      const catalogueTitle = document.querySelector('.page-title');
+      catalogueTitle.before(catalogueHeading);
+      catalogueCopy.append(catalogueTitle, document.querySelector('.page-intro'));
+      catalogueHeading.append(catalogueCopy);
+      catalogueHeading.insertAdjacentHTML('beforeend', `
+        <form class="catalogue-search" id="catalogueSearch" role="search" aria-label="Product search">
+          <label class="search-label" for="productSearch">Search products</label>
           <div class="search-controls">
             <input id="productSearch" type="search" placeholder="Model, category or model type" maxlength="120" autocomplete="off" aria-controls="productGrid" spellcheck="false">
             <button id="clearSearch" type="button" aria-label="Clear search" title="Clear search" hidden><i data-lucide="x" aria-hidden="true"></i></button>
@@ -558,32 +562,10 @@
           <p class="search-status" id="searchStatus" role="status" aria-live="polite"></p>
         </form>`);
       const searchInput = document.getElementById('productSearch');
-      const searchForm = document.getElementById('catalogueSearch');
-      const searchToggle = document.querySelector('.search-toggle');
-      function setSearchOpen(open, focus = true) {
-        searchForm.inert = !open;
-        searchForm.classList.toggle('is-open', open);
-        searchForm.setAttribute('aria-hidden', String(!open));
-        searchToggle.setAttribute('aria-expanded', String(open));
-        searchToggle.setAttribute('aria-label', open ? 'Close product search' : 'Open product search');
-        if (focus) (open ? searchInput : searchToggle).focus({ preventScroll: true });
-      }
-      searchToggle.addEventListener('click', () => setSearchOpen(searchForm.inert));
-      document.querySelector('.search-close').addEventListener('click', () => setSearchOpen(false));
-      document.addEventListener('keydown', event => {
-        if (event.key === 'Escape' && !searchForm.inert) setSearchOpen(false);
-      });
-      document.addEventListener('click', event => {
-        if (!searchForm.inert && !event.composedPath().includes(searchForm) && !event.composedPath().includes(searchToggle)) {
-          const focusWasInside = searchForm.contains(document.activeElement);
-          setSearchOpen(false, focusWasInside);
-        }
-      });
       const searchStatus = document.getElementById('searchStatus');
       const clearSearch = document.getElementById('clearSearch');
       const searchProducts = window.createProductSearch(window.eagleSafeProducts || []);
       searchInput.value = (filterParams.get('q') || '').slice(0, 120);
-      setSearchOpen(Boolean(searchInput.value.trim()), false);
       let selectedCategory = filterParams.get("category") || "all";
       if (!categories.some(([key]) => key === selectedCategory)) selectedCategory = "all";
       let selectedModelType = filterParams.get("modelType") || "all";
@@ -638,7 +620,6 @@
             && (product.weightKg || 0) >= minWeight;
         });
         clearSearch.hidden = !searchInput.value;
-        searchToggle.dataset.active = String(Boolean(searchInput.value.trim()));
         searchStatus.textContent = searchResult.correction
           ? 'Showing results for "' + searchResult.correction + '".'
           : '';
